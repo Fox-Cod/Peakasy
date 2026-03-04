@@ -131,49 +131,96 @@ var MINI = [
   "Calm energy all day. — Dana R.",
 ];
 
+// Can layouts: left% = center of each can in the stage
+var CAN_LAYOUTS = {
+  1: [{left:'50%', y:0,   scale:1,    opacity:1,    z:2}],
+  2: [{left:'30%', y:-18, scale:0.83, opacity:0.88, z:1},
+      {left:'63%', y:0,   scale:1,    opacity:1,    z:2}],
+  3: [{left:'18%', y:-20, scale:0.80, opacity:0.85, z:1},
+      {left:'50%', y:0,   scale:1,    opacity:1,    z:3},
+      {left:'82%', y:-20, scale:0.80, opacity:0.85, z:1}]
+};
+
+function _canTf(y, scale) {
+  return 'translateX(-50%) translateY(' + y + 'px) scale(' + scale + ')';
+}
+function _applyCanPos(el, pos) {
+  el.style.left    = pos.left;
+  el.style.zIndex  = pos.z;
+  el.style.opacity = pos.opacity;
+  el.style.transform = _canTf(pos.y, pos.scale);
+}
+function _makeCan(src) {
+  var d = document.createElement('div');
+  d.className = 'ocan';
+  // Start hidden at center-bottom, scale 0 — CSS transition will animate to target
+  d.style.cssText = 'position:absolute;bottom:0;left:50%;z-index:0;opacity:0;transform:' + _canTf(20, 0) + ';transform-origin:bottom center;';
+  d.innerHTML = '<img src="' + src + '" alt="Peakasy" style="height:180px;width:auto;display:block;">';
+  return d;
+}
+function _pulseFront(stage) {
+  var cans = stage.querySelectorAll('.ocan'), front = null, maxZ = 0;
+  cans.forEach(function(c) { var z = parseInt(c.style.zIndex) || 0; if (z > maxZ) { maxZ = z; front = c; } });
+  if (!front) return;
+  front.classList.remove('ocan--pulse');
+  void front.offsetWidth; // force reflow to restart animation
+  front.classList.add('ocan--pulse');
+  setTimeout(function() { front.classList.remove('ocan--pulse'); }, 650);
+}
+
 function renderCans() {
   var stage = document.getElementById('cans-stage');
   if (!stage) return;
-  stage.innerHTML = '';
-
-  // Use transparent product image (uploaded asset), fallback to P1
   var canImg = (window.PEAKASY && window.PEAKASY.productTransparent) || P1;
-
-  // Layout: 1 tin = center only
-  //         2 tins = back-left + front-right
-  //         3 tins = back-left + front-center + back-right
-  // left% positions the center of each can within the stage
-  var layouts = {
-    1: [{z:2, left:'50%', y:0,   scale:1,    opacity:1}],
-    2: [{z:1, left:'28%', y:-20, scale:0.82, opacity:0.88},
-        {z:2, left:'62%', y:0,   scale:1,    opacity:1}],
-    3: [{z:1, left:'18%', y:-22, scale:0.80, opacity:0.85},
-        {z:3, left:'50%', y:0,   scale:1,    opacity:1},
-        {z:1, left:'82%', y:-22, scale:0.80, opacity:0.85}]
-  };
   var n = Math.min(osQty, 3);
-  var positions = layouts[n] || layouts[1];
+  var positions = CAN_LAYOUTS[n];
+  // Exclude cans already animating out
+  var activeCans = Array.prototype.slice.call(stage.querySelectorAll('.ocan:not(.ocan--out)'));
+  var existing = activeCans.length;
 
-  positions.forEach(function(pos, i) {
-    var d = document.createElement('div');
-    d.className = 'ocan';
-    d.style.cssText = [
-      'position:absolute',
-      'bottom:0',
-      'left:' + pos.left,
-      'transform:translateX(-50%) translateY(' + pos.y + 'px) scale(' + pos.scale + ')',
-      'transform-origin:bottom center',
-      'z-index:' + pos.z,
-      'opacity:' + pos.opacity,
-      'transition:all .4s cubic-bezier(.34,1.56,.64,1)',
-      'animation:canPop .5s cubic-bezier(.34,1.56,.64,1) ' + (i * 0.08) + 's both'
-    ].join(';');
-    d.innerHTML = '<img src="' + canImg + '" alt="Peakasy" style="height:180px;width:auto;display:block;filter:drop-shadow(0 16px 32px rgba(0,0,0,.5));">';
-    stage.appendChild(d);
-  });
+  if (existing === 0) {
+    // First render: spawn all from center, stagger into positions
+    positions.forEach(function(pos, i) {
+      var d = _makeCan(canImg);
+      stage.appendChild(d);
+      (function(el, p, delay) {
+        setTimeout(function() { _applyCanPos(el, p); }, 16 + delay);
+      })(d, pos, i * 60);
+    });
+
+  } else if (n > existing) {
+    // Adding cans: reposition existing, fly in new ones
+    activeCans.forEach(function(can, i) { _applyCanPos(can, positions[i]); });
+    for (var i = existing; i < n; i++) {
+      var d = _makeCan(canImg);
+      stage.appendChild(d);
+      (function(el, pos, delay) {
+        setTimeout(function() { _applyCanPos(el, pos); }, 16 + delay);
+      })(d, positions[i], i * 60);
+    }
+    // Gold pulse on front can after animation completes
+    setTimeout(function() { _pulseFront(stage); }, 420 + (n - existing) * 60);
+
+  } else if (n < existing) {
+    // Removing cans: exit animation on surplus, reposition remaining
+    for (var i = n; i < existing; i++) {
+      (function(el) {
+        el.classList.add('ocan--out');
+        el.style.transition = 'transform .24s ease, opacity .2s ease';
+        el.style.transform = _canTf(20, 0);
+        el.style.opacity = '0';
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+      })(activeCans[i]);
+    }
+    activeCans.forEach(function(can, i) { if (i < n) _applyCanPos(can, positions[i]); });
+
+  } else {
+    // Same count, reposition (e.g. layout shift 1→same qty but different layout)
+    activeCans.forEach(function(can, i) { _applyCanPos(can, positions[i]); });
+  }
 
   var lbl = document.getElementById('cans-lbl');
-  if (lbl) lbl.textContent = osQty + ' × Mushroom Fuse Coffee';
+  if (lbl) lbl.textContent = osQty + ' \u00d7 Mushroom Fuse Coffee';
   var mr = document.getElementById('mini-revs');
   if (mr) {
     var show = osQty <= 1 ? 1 : osQty <= 2 ? 2 : 3;

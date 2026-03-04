@@ -427,18 +427,22 @@ body.light .mdot{background:rgba(255,255,255,.5);}
 .os-l::before{content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse at 50% 55%,rgba(200,169,110,.07) 0%,transparent 65%);}
 .cans-stage{position:relative;height:240px;width:100%;margin-bottom:18px;z-index:1;overflow:visible;}
-/* Stacked cans — JS sets inline transform/z-index/opacity, CSS provides base & animation */
-.ocan{position:absolute;bottom:0;left:50%;}
+/* Stacked cans — JS controls positions, CSS provides transitions */
+.ocan{
+  position:absolute;bottom:0;left:50%;transform-origin:bottom center;
+  transition:left .4s cubic-bezier(.34,1.56,.64,1),
+             transform .4s cubic-bezier(.34,1.56,.64,1),
+             opacity .22s ease;
+}
 .ocan img{height:190px;width:auto;display:block;
   filter:drop-shadow(0 12px 28px rgba(0,0,0,.55));}
-@keyframes canPop{
-  0%{opacity:0;transform:translateX(calc(-50% + var(--ox,0px))) scale(calc(var(--sc,.8) * 0.7)) translateY(20px);}
-  100%{opacity:var(--op,1);transform:translateX(calc(-50% + var(--ox,0px))) scale(var(--sc,1));}
+/* Gold pulse on front can when new can settles */
+@keyframes goldPulse{
+  0%  {filter:drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 0px rgba(200,169,110,0));}
+  35% {filter:drop-shadow(0 8px 20px rgba(0,0,0,.3)) drop-shadow(0 0 30px rgba(200,169,110,.8));}
+  100%{filter:drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 0px rgba(200,169,110,0));}
 }
-@keyframes canpop{
-  0%{opacity:0;transform:translateX(-50%) scale(.1) translateY(40px)!important;}
-  100%{}
-}
+.ocan--pulse img{animation:goldPulse .6s ease-out forwards;}
 .os-can-lbl{font-family:Cormorant Garamond,serif;font-size:.95rem;font-weight:700;
   color:var(--gold);text-align:center;margin-bottom:3px;z-index:1;position:relative;}
 .os-can-sub{font-size:.69rem;color:var(--muted);text-align:center;z-index:1;position:relative;}
