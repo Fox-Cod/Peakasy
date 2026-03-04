@@ -140,15 +140,16 @@ function renderCans() {
   var canImg = (window.PEAKASY && window.PEAKASY.productTransparent) || P1;
 
   // Layout: 1 tin = center only
-  //         2 tins = back-left + front-center
+  //         2 tins = back-left + front-right
   //         3 tins = back-left + front-center + back-right
+  // left% positions the center of each can within the stage
   var layouts = {
-    1: [{z:2, x:0,   y:0,   scale:1,    opacity:1}],
-    2: [{z:1, x:-55, y:-18, scale:0.82, opacity:0.88},
-        {z:2, x:18,  y:0,   scale:1,    opacity:1}],
-    3: [{z:1, x:-62, y:-20, scale:0.80, opacity:0.85},
-        {z:3, x:0,   y:0,   scale:1,    opacity:1},
-        {z:1, x:62,  y:-20, scale:0.80, opacity:0.85}]
+    1: [{z:2, left:'50%', y:0,   scale:1,    opacity:1}],
+    2: [{z:1, left:'28%', y:-20, scale:0.82, opacity:0.88},
+        {z:2, left:'62%', y:0,   scale:1,    opacity:1}],
+    3: [{z:1, left:'18%', y:-22, scale:0.80, opacity:0.85},
+        {z:3, left:'50%', y:0,   scale:1,    opacity:1},
+        {z:1, left:'82%', y:-22, scale:0.80, opacity:0.85}]
   };
   var n = Math.min(osQty, 3);
   var positions = layouts[n] || layouts[1];
@@ -159,8 +160,8 @@ function renderCans() {
     d.style.cssText = [
       'position:absolute',
       'bottom:0',
-      'left:50%',
-      'transform:translateX(calc(-50% + ' + pos.x + 'px)) translateY(' + pos.y + 'px) scale(' + pos.scale + ')',
+      'left:' + pos.left,
+      'transform:translateX(-50%) translateY(' + pos.y + 'px) scale(' + pos.scale + ')',
       'transform-origin:bottom center',
       'z-index:' + pos.z,
       'opacity:' + pos.opacity,
