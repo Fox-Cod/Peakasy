@@ -420,7 +420,7 @@ body.light .mdot{background:rgba(255,255,255,.5);}
 
 /* LEFT — cans display */
 .os-l{
-  background:var(--bg);border-right:1px solid var(--bor);
+  border-right:1px solid var(--bor);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:36px 24px;position:relative;overflow:hidden;
 }
