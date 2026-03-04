@@ -1,0 +1,107 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<div style="max-width:1080px;margin:90px auto;padding:0 28px 80px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;">
+
+  <div>
+    <div style="border-radius:20px;overflow:hidden;background:var(--surf);aspect-ratio:1;display:flex;align-items:center;justify-content:center;">
+      {%- if product.featured_image -%}
+        <img id="prod-main-img" src="{{ product.featured_image | img_url: '800x800' }}" alt="{{ product.title | escape }}"
+          style="width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;">
+      {%- else -%}
+        <img src="{{ 'Mush-Coffe-trans.png' | asset_url }}" alt="{{ product.title }}"
+          style="width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;">
+      {%- endif -%}
+    </div>
+    {%- if product.images.size > 1 -%}
+    <div style="display:flex;gap:8px;margin-top:10px;overflow-x:auto;">
+      {%- for img in product.images limit:5 -%}
+        <img src="{{ img | img_url: '120x120' }}" alt="{{ img.alt | escape }}"
+          onclick="document.getElementById('prod-main-img').src='{{ img | img_url: '800x800' }}'"
+          style="width:68px;height:68px;object-fit:contain;border-radius:8px;cursor:pointer;border:2px solid var(--bor);flex-shrink:0;mix-blend-mode:screen;background:var(--surf);">
+      {%- endfor -%}
+    </div>
+    {%- endif -%}
+  </div>
+
+  <div>
+    <p style="font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">{{ product.type | default: 'Functional Coffee' }}</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--text);margin-bottom:14px;line-height:1.15;">{{ product.title }}</h1>
+
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;">
+      <span style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--gold);">{{ current_variant.price | money }}</span>
+      {%- if current_variant.compare_at_price > current_variant.price -%}
+        <span style="font-size:.9rem;color:var(--muted);text-decoration:line-through;">{{ current_variant.compare_at_price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    <div style="display:flex;gap:6px;align-items:center;margin-bottom:22px;">
+      <span style="color:var(--gold);">★★★★★</span>
+      <span style="font-size:.82rem;color:var(--text2);">4.9 · 847 reviews</span>
+    </div>
+
+    <div style="color:var(--text2);line-height:1.68;font-size:.9rem;margin-bottom:26px;">{{ product.description }}</div>
+
+    {%- form 'product', product, id: 'product-form' -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+      {%- unless product.has_only_default_variant -%}
+        {%- for option in product.options_with_values -%}
+        <div style="margin-bottom:14px;">
+          <label style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text2);display:block;margin-bottom:8px;">{{ option.name }}</label>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            {%- for value in option.values -%}
+              <label style="cursor:pointer;">
+                <input type="radio" name="options[{{ option.name | escape }}]" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %} style="display:none;">
+                <span style="display:inline-block;padding:7px 15px;border:1.5px solid var(--bor);border-radius:8px;font-size:.84rem;color:var(--text);transition:all .2s;">{{ value }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endfor -%}
+      {%- endunless -%}
+
+      <button type="submit" class="btn-g" style="width:100%;padding:15px;font-size:.95rem;margin-bottom:10px;cursor:pointer;{% unless current_variant.available %}opacity:.5;pointer-events:none;{% endunless %}">
+        {%- if current_variant.available -%}Add to Cart — {{ current_variant.price | money }}{%- else -%}Sold Out{%- endif -%}
+      </button>
+
+      {{ form | payment_button }}
+    {%- endform -%}
+
+    <div style="display:flex;gap:16px;margin-top:18px;flex-wrap:wrap;">
+      <span style="font-size:.78rem;color:var(--text2);">🔒 Secure</span>
+      <span style="font-size:.78rem;color:var(--text2);">↩️ 30-day returns</span>
+      <span style="font-size:.78rem;color:var(--text2);">🚚 Ships 1–2 days</span>
+    </div>
+  </div>
+</div>
+<style>
+@media(max-width:768px){
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:28px!important;margin-top:65px!important;}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var form=document.getElementById('product-form');
+  if(!form)return;
+  form.querySelectorAll('input[type="radio"]').forEach(function(r){
+    r.addEventListener('change',function(){
+      form.querySelectorAll('input[type="radio"]:checked').forEach(function(c){c.closest('label').querySelector('span').style.cssText='border-color:var(--gold);color:var(--gold);';});
+      form.querySelectorAll('input[type="radio"]:not(:checked)').forEach(function(c){c.closest('label').querySelector('span').style.cssText='border-color:var(--bor);color:var(--text);';});
+    });
+  });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var id=parseInt(form.querySelector('[name="id"]').value);
+    var btn=form.querySelector('[type="submit"]');
+    var orig=btn.textContent;
+    btn.disabled=true;btn.textContent='Adding...';
+    fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({id:id,quantity:1})})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      if(d.status===422){btn.textContent=orig;btn.disabled=false;return;}
+      btn.textContent='✓ Added!';
+      fetch('/cart.js').then(function(r){return r.json();}).then(function(c){var cb=document.getElementById('cb');if(cb){cb.textContent=c.item_count;cb.className='bdg'+(c.item_count?' on':'');}});
+      setTimeout(function(){btn.disabled=false;btn.textContent=orig;},2000);
+    }).catch(function(){btn.disabled=false;btn.textContent=orig;});
+  });
+});
+</script>

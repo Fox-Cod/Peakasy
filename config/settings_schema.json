@@ -1,0 +1,20 @@
+[
+  {"name":"theme_info","theme_name":"Peakasy","theme_version":"2.0.0","theme_author":"Peakasy","theme_documentation_url":"https://peakasy.com"},
+  {"name":"Brand","settings":[
+    {"type":"image_picker","id":"favicon","label":"Favicon"},
+    {"type":"image_picker","id":"logo","label":"Logo (leave blank to use text)"},
+    {"type":"text","id":"logo_text","label":"Logo text","default":"Peakasy"},
+    {"type":"image_picker","id":"og_image","label":"Social share image (1200×630px)"}
+  ]},
+  {"name":"Product","settings":[
+    {"type":"text","id":"product_handle","label":"Default product handle","default":"mushroom-fuse-coffee","info":"URL slug of your product"}
+  ]},
+  {"name":"Analytics","settings":[
+    {"type":"text","id":"ga_id","label":"Google Analytics ID","placeholder":"G-XXXXXXXXXX"},
+    {"type":"text","id":"fb_pixel","label":"Facebook Pixel ID"}
+  ]},
+  {"name":"Social","settings":[
+    {"type":"url","id":"instagram_url","label":"Instagram"},
+    {"type":"url","id":"tiktok_url","label":"TikTok"}
+  ]}
+]

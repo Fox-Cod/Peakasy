@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>
+    {%- if template == 'index' -%}{{ shop.name }} — Mushroom Coffee for Peak Performance
+    {%- elsif template == 'product' -%}{{ product.title }} — {{ shop.name }}
+    {%- elsif template == 'cart' -%}Cart ({{ cart.item_count }}) — {{ shop.name }}
+    {%- else -%}{{ page_title | default: shop.name }} — {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {%- assign meta_desc = page_description | default: "Peakasy Mushroom Coffee — Lion's Mane & Chaga for focus, clean energy and calm. No jitters. No crash. Ready in 60 seconds." -%}
+  <meta name="description" content="{{ meta_desc | truncate: 160 }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <meta property="og:title" content="{{ page_title | default: shop.name | escape }}">
+  <meta property="og:description" content="{{ meta_desc | truncate: 200 | escape }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:type" content="{%- if template == 'product' -%}product{%- else -%}website{%- endif -%}">
+  {%- if template == 'product' and product.featured_image -%}
+    <meta property="og:image" content="{{ product.featured_image | img_url: '1200x630' | prepend: 'https:' }}">
+    <meta property="product:price:amount" content="{{ product.price | divided_by: 100.0 }}">
+    <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  {%- else -%}
+    <meta property="og:image" content="{{ 'product-1.png' | asset_url }}">
+  {%- endif -%}
+  <meta name="twitter:card" content="summary_large_image">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" href="{{ settings.favicon | img_url: '32x32' }}">
+  {%- endif -%}
+
+  {{ content_for_header }}
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Theme: apply saved preference before render to prevent flash -->
+  <script>
+    try {
+      if (localStorage.getItem('pk-theme') === 'light') {
+        document.documentElement.setAttribute('data-theme','light');
+        document.documentElement.classList.add('light');
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+      }
+    } catch(e) {
+      document.documentElement.setAttribute('data-theme','dark');
+    }
+  </script>
+
+  {{ 'peakasy.css' | asset_url | stylesheet_tag }}
+
+  <!-- Schema.org JSON-LD -->
+  {%- assign ld = product | default: all_products['mushroom-fuse-coffee'] -%}
+  {%- if ld != blank -%}
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Product","name":{{ ld.title | json }},"description":{{ ld.description | strip_html | truncate: 300 | json }},"brand":{"@type":"Brand","name":{{ shop.name | json }}},"image":{% if ld.featured_image %}[{{ ld.featured_image | img_url: '1024x' | prepend: 'https:' | json }}]{% else %}[]{% endif %},"offers":{"@type":"Offer","priceCurrency":{{ cart.currency.iso_code | json }},"price":{{ ld.price | default: 3490 | divided_by: 100.0 }},"availability":"{% if ld.available %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}","url":"{{ shop.url }}/products/{{ ld.handle }}"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"847"}}
+  </script>
+  {%- endif -%}
+
+  <!-- Shopify product data for JS -->
+  {%- assign _handle = settings.product_handle | default: 'mushroom-fuse-coffee' -%}
+  {%- assign js_prod = product | default: all_products[_handle] -%}
+  <script>
+    window.PEAKASY = {
+      productId:   {{ js_prod.id | default: 'null' }},
+      variantId:   {{ js_prod.first_available_variant.id | default: 'null' }},
+      price:       {{ js_prod.price | default: 3490 }},
+      title:       {{ js_prod.title | default: 'Mushroom Fuse Instant Coffee' | json }},
+      handle:      {{ js_prod.handle | default: 'mushroom-fuse-coffee' | json }},
+      available:   {{ js_prod.available | default: true }},
+      productImg:  "{% if js_prod.featured_image %}{{ js_prod.featured_image | img_url: 'master' }}{% else %}{{ 'product-1.png' | asset_url }}{% endif %}",
+      productTransparent: "{{ 'product-transparent.png' | asset_url }}",
+      lifestyleImg:"{{ 'product-2.jpg' | asset_url }}",
+      cartCount:   {{ cart.item_count }},
+      currency:    {{ cart.currency.iso_code | json }}
+    };
+    window.PEAKASY_GALLERY = [
+      "{{ 'gallery-1.jpg' | asset_url }}",
+      "{{ 'gallery-2.jpg' | asset_url }}",
+      "{{ 'gallery-3.jpg' | asset_url }}",
+      "{{ 'gallery-4.jpg' | asset_url }}",
+      "{{ 'gallery-5.jpg' | asset_url }}"
+    ];
+    window.PEAKASY_IMG  = window.PEAKASY.productImg;
+    window.PEAKASY_IMG2 = window.PEAKASY.lifestyleImg;
+  </script>
+
+  <!-- Analytics -->
+  {%- if settings.ga_id != blank -%}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.ga_id }}"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ settings.ga_id }}');</script>
+  {%- endif -%}
+  {%- if settings.fb_pixel != blank -%}
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','{{ settings.fb_pixel }}');fbq('track','PageView');</script>
+  {%- endif -%}
+</head>
+
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="toast"><span id="t-ico"></span><span id="t-msg"></span></div>
+<div id="ticker"></div>
+
+<!-- NAV -->
+<nav id="mnav">
+  <div class="n-logo">
+    <a href="{{ routes.root_url }}" style="text-decoration:none">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | img_url: '200x60' }}" alt="{{ shop.name }}" style="height:30px;width:auto;">
+      {%- else -%}
+        <span class="n-logo-text">{{ settings.logo_text | default: shop.name }}</span>
+      {%- endif -%}
+    </a>
+  </div>
+
+  <div class="n-links-wrap">
+    <div class="n-links">
+      <a class="nl{% if template == 'index' %} on{% endif %}" href="{{ routes.root_url }}">Home</a>
+      <a class="nl" href="#order-sec" onclick="event.preventDefault();goOrder()">Shop</a>
+      <a class="nl" href="/pages/about">About</a>
+      <a class="nl" href="/pages/shipping">Shipping</a>
+    </div>
+  </div>
+
+  <div class="n-right">
+    <button class="n-theme" id="thb" onclick="toggleTheme()" aria-label="Toggle theme">☀️</button>
+    <a class="n-icon" href="https://account.peakasy.com" aria-label="My Account" title="My Account">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+    </a>
+    <a class="n-cart" href="{{ routes.cart_url }}" aria-label="Cart">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      <span class="bdg{% if cart.item_count > 0 %} on{% endif %}" id="cb">{{ cart.item_count }}</span>
+    </a>
+    <a class="btn-g n-cta" href="#order-sec" onclick="event.preventDefault();goOrder()">BUY NOW</a>
+    <button class="n-ham" id="nham" onclick="document.getElementById('nmob').classList.toggle('on')" aria-label="Menu">☰</button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="n-mob" id="nmob">
+  <a class="nl" href="{{ routes.root_url }}">Home</a>
+  <a class="nl" href="#order-sec" onclick="event.preventDefault();document.getElementById('nmob').classList.remove('on');goOrder()">Shop</a>
+  <a class="nl" href="/pages/about">About</a>
+  <a class="nl" href="/pages/shipping">Shipping</a>
+  <a class="nl" href="https://account.peakasy.com">My Account</a>
+  <a class="nl" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+</div>
+
+{{ content_for_layout }}
+
+<!-- GALLERY LIGHTBOX -->
+<div id="gal-lb" onclick="galLbClose()" style="display:none;position:fixed;inset:0;z-index:97000;background:rgba(0,0,0,.92);backdrop-filter:blur(16px);align-items:center;justify-content:center;flex-direction:column;padding:0;">
+  <button onclick="galLbClose()" style="position:absolute;top:18px;right:22px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;">&#x2715;</button>
+  <button id="gal-lb-prev" onclick="event.stopPropagation();galLbNav(-1)" style="position:absolute;left:18px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">&#x2039;</button>
+  <img id="gal-lb-img" src="" alt="" style="max-width:min(88vw,900px);max-height:82vh;border-radius:14px;box-shadow:0 32px 80px rgba(0,0,0,.7);object-fit:contain;display:block;">
+  <button id="gal-lb-next" onclick="event.stopPropagation();galLbNav(1)" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">&#x203a;</button>
+  <div id="gal-lb-cap" style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);background:rgba(10,9,7,.75);border-radius:10px;padding:8px 20px;font-size:.78rem;color:rgba(240,235,226,.8);white-space:nowrap;backdrop-filter:blur(8px);"></div>
+  <div id="gal-lb-dots" style="position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:flex;gap:6px;"></div>
+</div>
+
+<!-- Review photo lightbox -->
+<div id="wlb" onclick="wlbClose()">
+  <button id="wlb-close" onclick="wlbClose()">&#x2715;</button>
+  <img id="wlb-img" src="" alt="">
+  <div id="wlb-info"></div>
+</div>
+
+<!-- EXIT POPUP -->
+<div id="exit-popup" onclick="epClose()">
+  <div class="ep-overlay"></div>
+  <div class="ep-card" onclick="event.stopPropagation()">
+    <button class="ep-close" onclick="epClose()">&#x2715;</button>
+    <div class="ep-top">
+      <div class="ep-stars">★★★★★</div>
+      <div class="ep-badge">Wait — exclusive offer</div>
+      <div class="ep-title">Before you go...<br>Here's a gift.</div>
+      <div class="ep-sub">Here's 10% off — just for you.</div>
+      <span class="ep-disc">10%</span>
+      <span class="ep-disc-label">off your first order · expires soon</span>
+      <div class="ep-timer">
+        <div class="ep-timer-unit"><span class="ep-timer-n" id="ep-mm">14</span><div class="ep-timer-l">min</div></div>
+        <span class="ep-timer-sep">:</span>
+        <div class="ep-timer-unit"><span class="ep-timer-n" id="ep-ss">59</span><div class="ep-timer-l">sec</div></div>
+      </div>
+    </div>
+    <div class="ep-body">
+      <div class="ep-code-box">
+        <div><div class="ep-code-lbl">Your discount code</div><div class="ep-code">PEAK10</div></div>
+        <button class="ep-copy" id="ep-copy-btn" onclick="epCopy()">Copy</button>
+      </div>
+      <button class="ep-cta" onclick="epAccept()">Claim My 10% Off &#8594;</button>
+      <button class="ep-skip" onclick="epClose()">No thanks, I'll pay full price</button>
+    </div>
+  </div>
+</div>
+
+{{ 'peakasy.js' | asset_url | script_tag }}
+
+</body>
+</html>
