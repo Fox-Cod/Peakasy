@@ -18,7 +18,7 @@
         <div><span class="sn">4.9★</span><span class="sl">Customer<br>Rating</span></div>
       </div>
       <div class="h-btns">
-        <button class="btn-g" onclick="goOrder()">Shop Now — $34.90</button>
+        <button class="btn-g" onclick="goOrder()">Shop Now — {{ section_product.price | money }}</button>
         <button class="btn-o" onclick="document.getElementById('prod-anch').scrollIntoView({behavior:'smooth'})">Learn More</button>
       </div>
       <div class="h-trust"><span class="h-stars">★★★★★</span><span>4.9 · 847 reviews · Free shipping over $40</span></div>
@@ -88,7 +88,7 @@
         <div class="psb"><div class="psb-ico">🛡️</div><div><div class="psb-t">Immune Fortification</div><div class="psb-d">Chaga's beta-glucans and antioxidants support daily immune defense.</div></div></div>
         <div class="psb"><div class="psb-ico">⚡</div><div><div class="psb-t">Clean, Balanced Energy</div><div class="psb-d">Adaptogens regulate cortisol — no jitters, no crash, pure flow.</div></div></div>
       </div>
-      <button class="btn-g" onclick="goOrder()">Add to Cart — $34.90</button>
+      <button class="btn-g" onclick="goOrder()">Add to Cart — {{ section_product.price | money }}</button>
     </div>
   </div>
 </section>
@@ -213,17 +213,17 @@
             <div class="os-pills">
               <div class="osp sel" data-q="1" onclick="osPick(this,1)">
                 <div class="osp-l"><div class="osp-chk">✓</div><div><div class="osp-n">1 Tin</div><div class="osp-d">Try it · 30 servings</div></div></div>
-                <div class="osp-r"><div class="osp-p">$34.90</div><div class="osp-pp">$1.16/serving</div></div>
+                <div class="osp-r"><div class="osp-p">{{ section_product.price | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
               </div>
               <div class="osp" data-q="2" onclick="osPick(this,2)">
                 <div class="osp-bdg">Popular</div>
                 <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">2 Tins</div><div class="osp-d">60-day supply</div></div></div>
-                <div class="osp-r"><div class="osp-p">$69.80</div><div class="osp-pp">$1.16/serving</div></div>
+                <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 2 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
               </div>
               <div class="osp" data-q="3" onclick="osPick(this,3)">
                 <div class="osp-bdg" style="background:var(--gl)">Best Value</div>
                 <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">3 Tins</div><div class="osp-d">90-day · Free ship</div></div></div>
-                <div class="osp-r"><div class="osp-p">$104.70</div><div class="osp-pp">$1.16/serving</div></div>
+                <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 3 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@
                 <span class="sub-opt-ico">🛒</span>
                 <div class="sub-opt-body">
                   <div class="sub-opt-title">One-Time Purchase</div>
-                  <div class="sub-opt-price" id="sub-price-ot">$34.90</div>
+                  <div class="sub-opt-price" id="sub-price-ot">{{ section_product.price | money }}</div>
                 </div>
               </button>
               <button class="sub-opt" id="sub-sub" onclick="pkSetPurchaseType('subscribe')">
@@ -243,7 +243,7 @@
                 <span class="sub-opt-ico">🔄</span>
                 <div class="sub-opt-body">
                   <div class="sub-opt-title">Subscribe &amp; Save</div>
-                  <div class="sub-opt-price sub-price-green" id="sub-price-sub">$31.41<span class="sub-per">/mo</span></div>
+                  <div class="sub-opt-price sub-price-green" id="sub-price-sub">{{ section_product.price | times: 0.9 | round | money }}<span class="sub-per">/mo</span></div>
                 </div>
               </button>
             </div>
@@ -253,10 +253,10 @@
             </div>
 
             <div class="os-sum">
-              <div class="os-sr"><span>Subtotal</span><span id="os-sub">$34.90</span></div>
-              <div class="os-sr sub-savings-row" id="sub-savings-row" style="display:none"><span style="color:#5a9a5a">Subscription Savings</span><span id="sub-savings-amt" style="color:#5a9a5a">−$3.49</span></div>
+              <div class="os-sr"><span>Subtotal</span><span id="os-sub">{{ section_product.price | money }}</span></div>
+              <div class="os-sr sub-savings-row" id="sub-savings-row" style="display:none"><span style="color:#5a9a5a">Subscription Savings</span><span id="sub-savings-amt" style="color:#5a9a5a">−{{ section_product.price | times: 0.1 | round | money }}</span></div>
               <div class="os-sr"><span>Shipping</span><span id="os-ship" style="color:#5a9a5a">Free</span></div>
-              <div class="os-sr"><span style="font-weight:600;color:var(--text)">Total</span><span class="os-tot" id="os-tot">$34.90</span></div>
+              <div class="os-sr"><span style="font-weight:600;color:var(--text)">Total</span><span class="os-tot" id="os-tot">{{ section_product.price | money }}</span></div>
             </div>
             {%- assign sec_prod = all_products[section.settings.product_handle] -%}
             {%- assign sec_variant = sec_prod.first_available_variant -%}
@@ -346,7 +346,7 @@
         </div>
       </div>
       <div class="rr-foot">
-        <div><div class="rr-price-lbl">Perfect for your ritual</div><div class="rr-price">Peakasy Mushroom Fuse — $34.90</div></div>
+        <div><div class="rr-price-lbl">Perfect for your ritual</div><div class="rr-price">Peakasy Mushroom Fuse — {{ section_product.price | money }}</div></div>
         <div class="rr-acts">
           <button class="rit-btn" onclick="rReset()">← Try Again</button>
           <button class="rit-btn prim" onclick="addToCart()">Add to Cart →</button>
@@ -482,7 +482,7 @@
 </section>
 
 <!-- CTA -->
-<div class="cta-ban"><p class="tag">Ready to Peak?</p><h2 class="h2">Start Your Ritual Today</h2><p>Join 847+ customers who upgraded their morning coffee.</p><button class="btn-g" onclick="goOrder()">Get Peakasy — $34.90 →</button></div>
+<div class="cta-ban"><p class="tag">Ready to Peak?</p><h2 class="h2">Start Your Ritual Today</h2><p>Join 847+ customers who upgraded their morning coffee.</p><button class="btn-g" onclick="goOrder()">Get Peakasy — {{ section_product.price | money }} →</button></div>
 
 <!-- FOOTER -->
 <footer>
