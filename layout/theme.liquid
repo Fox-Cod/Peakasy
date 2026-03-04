@@ -76,7 +76,7 @@
       handle:      {{ js_prod.handle | default: 'mushroom-fuse-coffee' | json }},
       available:   {{ js_prod.available | default: true }},
       productImg:  "{% if js_prod.featured_image %}{{ js_prod.featured_image | img_url: 'master' }}{% else %}{{ 'product-1.png' | asset_url }}{% endif %}",
-      productTransparent: "{{ 'product-transparent.png' | asset_url }}",
+      productTransparent: "{{ 'Mush-Coffe-trans.png' | asset_url }}",
       lifestyleImg:"{{ 'product-2.jpg' | asset_url }}",
       cartCount:   {{ cart.item_count }},
       currency:    {{ cart.currency.iso_code | json }}
@@ -193,7 +193,7 @@
     </div>
     <div class="ep-body">
       <div class="ep-code-box">
-        <div><div class="ep-code-lbl">Your discount code</div><div class="ep-code">PEAK10</div></div>
+        <div><div class="ep-code-lbl">Your discount code</div><div class="ep-code">ONECUP</div></div>
         <button class="ep-copy" id="ep-copy-btn" onclick="epCopy()">Copy</button>
       </div>
       <button class="ep-cta" onclick="epAccept()">Claim My 10% Off &#8594;</button>

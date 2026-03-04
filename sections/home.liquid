@@ -134,8 +134,8 @@
 
       <!-- LIFESTYLE 1 — morning table -->
       <div class="gc" id="gc1" data-gi="1" onclick="galLbOpen(1)">
-        <div class="gc-bg" style="background:none;"><img 
-  src="{{ 'gallery-1.jpg' | asset_url }}"
+        <div class="gc-bg" style="background:none;"><img
+  src="{% if section_product.images[1] %}{{ section_product.images[1] | img_url: 'master' }}{% else %}{{ 'gallery-1.jpg' | asset_url }}{% endif %}"
    alt="Morning Ritual" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
         <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.25) 0%,rgba(8,6,4,.65) 100%);opacity:1;"></div>
         <div class="gc-mid" style="flex-direction:column;gap:6px;z-index:2;">
@@ -149,8 +149,8 @@
 
       <!-- LIFESTYLE 2 — flatlay HOW IT WORKS -->
       <div class="gc" id="gc2" data-gi="2" onclick="galLbOpen(2)">
-        <div class="gc-bg" style="background:none;"><img 
-  src="{{ 'gallery-2.jpg' | asset_url }}"
+        <div class="gc-bg" style="background:none;"><img
+  src="{% if section_product.images[2] %}{{ section_product.images[2] | img_url: 'master' }}{% else %}{{ 'gallery-2.jpg' | asset_url }}{% endif %}"
    alt="How It Works" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
         <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.3) 0%,rgba(8,6,4,.72) 100%);opacity:1;"></div>
         <div class="gc-mid" style="padding:20px;z-index:2;">
@@ -162,8 +162,8 @@
 
       <!-- LIFESTYLE 3 — Meet Your Daily Reset -->
       <div class="gc" id="gc3" data-gi="3" onclick="galLbOpen(3)">
-        <div class="gc-bg" style="background:none;"><img 
-  src="{{ 'gallery-3.jpg' | asset_url }}"
+        <div class="gc-bg" style="background:none;"><img
+  src="{% if section_product.images[3] %}{{ section_product.images[3] | img_url: 'master' }}{% else %}{{ 'gallery-3.jpg' | asset_url }}{% endif %}"
    alt="Daily Reset" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
         <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.25) 0%,rgba(8,6,4,.7) 100%);opacity:1;"></div>
         <div class="gc-mid" style="gap:14px;padding:0 14px;z-index:2;">
@@ -179,8 +179,8 @@
 
       <!-- LIFESTYLE 4 — Low Energy Costs You -->
       <div class="gc" id="gc4" data-gi="4" onclick="galLbOpen(4)">
-        <div class="gc-bg" style="background:none;"><img 
-  src="{{ 'gallery-4.jpg' | asset_url }}"
+        <div class="gc-bg" style="background:none;"><img
+  src="{% if section_product.images[4] %}{{ section_product.images[4] | img_url: 'master' }}{% else %}{{ 'gallery-4.jpg' | asset_url }}{% endif %}"
    alt="Energy" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
         <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.2) 0%,rgba(8,6,4,.75) 100%);opacity:1;"></div>
         <div class="gc-shine"></div>
