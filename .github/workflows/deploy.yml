@@ -23,5 +23,6 @@ jobs:
         run: |
           shopify theme push \
             --store="8igpnk-rn.myshopify.com" \
+            --theme="peakasy-v3" \
             --allow-live \
             --no-color
