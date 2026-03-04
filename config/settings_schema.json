@@ -1,5 +1,5 @@
 [
-  {"name":"theme_info","theme_name":"Peakasy","theme_version":"2.0.0","theme_author":"Peakasy","theme_documentation_url":"https://peakasy.com"},
+  {"name":"theme_info","theme_name":"Peakasy","theme_version":"2.0.0","theme_author":"Peakasy","theme_support_email":"support@peakasy.com","theme_documentation_url":"https://peakasy.com"},
   {"name":"Brand","settings":[
     {"type":"image_picker","id":"favicon","label":"Favicon"},
     {"type":"image_picker","id":"logo","label":"Logo (leave blank to use text)"},
