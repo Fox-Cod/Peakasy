@@ -148,49 +148,59 @@ function cartPageRerender(cart) {
   var cb = document.getElementById('cb');
   if (cb) { cb.textContent = cart.item_count; cb.className = 'bdg' + (cart.item_count > 0 ? ' on' : ''); }
 
-  // Update subtotal
-  var sub = document.getElementById('cart-subtotal');
-  if (sub) sub.textContent = formatMoney(cart.total_price);
-
   // Update count label
   var lbl = document.getElementById('cart-count-label');
   if (lbl) lbl.textContent = cart.item_count + (cart.item_count === 1 ? ' item' : ' items');
 
-  // If cart is empty — reload to show empty state
+  // If cart is empty — reload to show empty state template
   if (cart.item_count === 0) {
     window.location.reload();
     return;
   }
 
-  // Update each item row
-  var items = document.querySelectorAll('.cart-item');
-  items.forEach(function(row) {
-    var key = row.dataset.key;
-    var cartItem = null;
-    for (var i = 0; i < cart.items.length; i++) {
-      if (cart.items[i].key === key) { cartItem = cart.items[i]; break; }
-    }
-    if (!cartItem) {
-      // Item was removed
-      row.remove();
-    } else {
-      // Update qty display
-      var qtyEl = row.querySelector('.cart-qty-display');
-      if (qtyEl) qtyEl.textContent = cartItem.quantity;
-      // Update line price
-      var priceEl = row.querySelector('.cart-line-price');
-      if (priceEl) priceEl.textContent = formatMoney(cartItem.line_price);
-      // Restore opacity
-      row.style.opacity = '1';
-      row.style.pointerEvents = '';
-      // Update button onclick values
-      var btns = row.querySelectorAll('button[onclick*="cartUpdateQty"]');
-      if (btns.length === 2) {
-        btns[0].setAttribute('onclick', "cartUpdateQty('" + key + "', " + (cartItem.quantity - 1) + ", this)");
-        btns[1].setAttribute('onclick', "cartUpdateQty('" + key + "', " + (cartItem.quantity + 1) + ", this)");
-      }
-    }
+  // Update subtotal
+  var sub = document.getElementById('cart-subtotal');
+  if (sub) sub.textContent = formatMoney(cart.total_price);
+
+  // Rebuild items list from JSON (avoids key-mismatch bugs)
+  var container = document.getElementById('cart-items');
+  if (!container) return;
+
+  var html = '';
+  cart.items.forEach(function(item) {
+    var img = item.image || '';
+    var variantHtml = (item.variant_title && item.variant_title !== 'Default Title')
+      ? '<div style="font-size:.78rem;color:var(--muted);margin-bottom:4px;">' + escHtml(item.variant_title) + '</div>'
+      : '';
+    var skuHtml = item.sku
+      ? '<div style="font-size:.78rem;color:var(--muted);margin-bottom:8px;">' + escHtml(item.sku) + '</div>'
+      : '';
+
+    html += '<div class="cart-item" data-key="' + escHtml(item.key) + '" style="display:flex;gap:14px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--bor);">';
+    html +=   '<a href="/products/' + escHtml(item.handle) + '" style="flex-shrink:0;display:block;width:76px;height:76px;background:var(--surf);border-radius:10px;overflow:hidden;">';
+    html +=     '<img src="' + img + '" alt="' + escHtml(item.title) + '" style="width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;">';
+    html +=   '</a>';
+    html +=   '<div style="flex:1;min-width:0;">';
+    html +=     '<a href="/products/' + escHtml(item.handle) + '" style="text-decoration:none;font-weight:600;color:var(--text);font-size:.95rem;display:block;margin-bottom:3px;">' + escHtml(item.product_title) + '</a>';
+    html +=     variantHtml + skuHtml;
+    html +=     '<div style="display:flex;align-items:center;gap:12px;margin-top:8px;">';
+    html +=       '<div style="display:flex;align-items:center;border:1.5px solid var(--bor);border-radius:8px;overflow:hidden;">';
+    html +=         '<button onclick="cartUpdateQty(\'' + escHtml(item.key) + '\',' + (item.quantity - 1) + ',this)" style="width:34px;height:34px;background:none;border:none;color:var(--text);cursor:pointer;font-size:1.1rem;line-height:1;" aria-label="Decrease">−</button>';
+    html +=         '<span class="cart-qty-display" style="padding:0 12px;color:var(--text);font-size:.88rem;font-weight:600;border-left:1px solid var(--bor);border-right:1px solid var(--bor);height:34px;display:flex;align-items:center;min-width:36px;justify-content:center;">' + item.quantity + '</span>';
+    html +=         '<button onclick="cartUpdateQty(\'' + escHtml(item.key) + '\',' + (item.quantity + 1) + ',this)" style="width:34px;height:34px;background:none;border:none;color:var(--text);cursor:pointer;font-size:1.1rem;line-height:1;" aria-label="Increase">+</button>';
+    html +=       '</div>';
+    html +=       '<button onclick="cartRemoveItem(\'' + escHtml(item.key) + '\',this)" style="font-size:.75rem;color:var(--muted);text-decoration:underline;background:none;border:none;cursor:pointer;padding:0;">Remove</button>';
+    html +=     '</div>';
+    html +=   '</div>';
+    html +=   '<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.35rem;font-weight:700;color:var(--gold);flex-shrink:0;" class="cart-line-price">' + formatMoney(item.line_price) + '</div>';
+    html += '</div>';
   });
+
+  container.innerHTML = html;
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function formatMoney(cents) {
