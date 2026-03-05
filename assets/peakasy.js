@@ -131,30 +131,31 @@ var MINI = [
   "Calm energy all day. — Dana R.",
 ];
 
-// Can layouts: left% = center of each can in the stage
+// Can layouts: all centered (left:50%), differentiated by rotate/scale/z
+// rotate: negative = lean left, positive = lean right
 var CAN_LAYOUTS = {
-  1: [{left:'50%', y:0,   scale:1,    opacity:1,    z:2}],
-  2: [{left:'30%', y:-18, scale:0.83, opacity:0.88, z:1},
-      {left:'63%', y:0,   scale:1,    opacity:1,    z:2}],
-  3: [{left:'18%', y:-20, scale:0.80, opacity:0.85, z:1},
-      {left:'50%', y:0,   scale:1,    opacity:1,    z:3},
-      {left:'82%', y:-20, scale:0.80, opacity:0.85, z:1}]
+  1: [{left:'50%', y:0,   scale:1,    rotate:0,   opacity:1,    z:2}],
+  2: [{left:'50%', y:0,   scale:0.88, rotate:-15, opacity:0.90, z:1},
+      {left:'50%', y:0,   scale:1,    rotate:0,   opacity:1,    z:2}],
+  3: [{left:'50%', y:0,   scale:0.85, rotate:-15, opacity:0.88, z:1},
+      {left:'50%', y:0,   scale:1,    rotate:0,   opacity:1,    z:3},
+      {left:'50%', y:-16, scale:0.85, rotate:15,  opacity:0.88, z:1}]
 };
 
-function _canTf(y, scale) {
-  return 'translateX(-50%) translateY(' + y + 'px) scale(' + scale + ')';
+function _canTf(y, scale, rotate) {
+  return 'translateX(-50%) translateY(' + y + 'px) rotate(' + (rotate||0) + 'deg) scale(' + scale + ')';
 }
 function _applyCanPos(el, pos) {
-  el.style.left    = pos.left;
-  el.style.zIndex  = pos.z;
-  el.style.opacity = pos.opacity;
-  el.style.transform = _canTf(pos.y, pos.scale);
+  el.style.left      = pos.left;
+  el.style.zIndex    = pos.z;
+  el.style.opacity   = pos.opacity;
+  el.style.transform = _canTf(pos.y, pos.scale, pos.rotate);
 }
 function _makeCan(src) {
   var d = document.createElement('div');
   d.className = 'ocan';
   // Start hidden at center-bottom, scale 0 — CSS transition will animate to target
-  d.style.cssText = 'position:absolute;bottom:0;left:50%;z-index:0;opacity:0;transform:' + _canTf(20, 0) + ';transform-origin:bottom center;';
+  d.style.cssText = 'position:absolute;bottom:0;left:50%;z-index:0;opacity:0;transform:' + _canTf(20, 0, 0) + ';transform-origin:bottom center;';
   d.innerHTML = '<img src="' + src + '" alt="Peakasy" style="height:180px;width:auto;display:block;">';
   return d;
 }
@@ -207,7 +208,7 @@ function renderCans() {
       (function(el) {
         el.classList.add('ocan--out');
         el.style.transition = 'transform .24s ease, opacity .2s ease';
-        el.style.transform = _canTf(20, 0);
+        el.style.transform = _canTf(20, 0, 0);
         el.style.opacity = '0';
         setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
       })(activeCans[i]);
