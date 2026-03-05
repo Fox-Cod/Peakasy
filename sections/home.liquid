@@ -41,22 +41,22 @@
   </div>
 </section>
 
-<div class="h-strip">
-  <div class="hs">🌿 <b>100% Organic</b>&nbsp;Mushrooms</div>
-  <div class="hs">🔬 <b>Lab Tested</b>&nbsp;Every Batch</div>
-  <div class="hs">🇺🇸 <b>Made in USA</b>&nbsp;Freeze-Dried</div>
-  <div class="hs">📦 <b>30 Servings</b>&nbsp;Per Tin</div>
-  <div class="hs">⚡ <b>No Jitters</b>&nbsp;No Crash</div>
-</div>
-
-<div class="mtrack">
+  <div class="h-strip">
+    <div class="hs">🌿 <b>100% Organic</b>&nbsp;Mushrooms</div>
+    <div class="hs">🔬 <b>Lab Tested</b>&nbsp;Every Batch</div>
+    <div class="hs">🇺🇸 <b>Made in USA</b>&nbsp;Freeze-Dried</div>
+    <div class="hs">📦 <b>30 Servings</b>&nbsp;Per Tin</div>
+    <div class="hs">⚡ <b>No Jitters</b>&nbsp;No Crash</div>
+  </div>
+<!-- MARQUEE -->
+<div class="mbar"><div class="mtrack">
   <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
   <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
   <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
   <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
   <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
   <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
-</div>
+</div></div>
 
 <!-- PRODUCT -->
 <section class="prod-sec" id="prod-anch">
@@ -243,6 +243,9 @@
               <span class="sub-info-ico">🔄</span>
               <span>Ships every 30 days · Cancel anytime · No commitment</span>
             </div>
+            <div id="sub-manage-link" style="display:none;margin-top:6px;text-align:center;">
+              <a href="/account" style="font-size:.7rem;color:var(--muted);text-decoration:underline;text-underline-offset:2px;">Manage or cancel subscription →</a>
+            </div>
 
             <div class="os-sum">
               <div class="os-sr"><span>Subtotal</span><span id="os-sub">{{ section_product.price | money }}</span></div>
@@ -256,18 +259,13 @@
               {%- form 'product', sec_prod, id: 'pk-atc-form' -%}
                 <input type="hidden" name="id" id="pk-variant-id" value="{{ sec_variant.id }}">
                 <input type="hidden" name="quantity" id="pk-qty" value="1">
-                <!-- Recharge subscription properties: names cleared by default, set by JS when subscribe selected -->
-                <input type="hidden" name="" id="pk-sub-freq" value="1" data-sub-name="properties[shipping_interval_frequency]">
-                <input type="hidden" name="" id="pk-sub-unit" value="month" data-sub-name="properties[shipping_interval_unit_type]">
+                <!-- Shopify Subscriptions: selling_plan ID, populated from product selling plans -->
+                {%- assign sub_plan = sec_prod.selling_plan_groups.first.selling_plans.first -%}
+                <input type="hidden" name="" id="pk-selling-plan" value="{{ sub_plan.id | default: '' }}">
                 <button type="submit" class="os-cta" id="pk-atc-btn">
                   <span id="os-cta-t">Add 1 Tin to Cart</span><span class="os-arr">→</span>
                 </button>
                 <div class="os-express">{{ form | payment_button }}</div>
-                <div class="os-pay-icons">
-                  {%- for type in shop.enabled_payment_types -%}
-                    {{ type | payment_type_svg_tag: class: 'opi' }}
-                  {%- endfor -%}
-                </div>
               {%- endform -%}
             {%- else -%}
               <button class="os-cta" onclick="addToCart()">

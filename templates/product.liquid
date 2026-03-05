@@ -59,6 +59,7 @@
         {%- endfor -%}
       {%- endunless -%}
 
+      <div class="subscriptions_app_embed_block" style="margin-bottom:14px;"></div>
       <button type="submit" class="btn-g" style="width:100%;padding:15px;font-size:.95rem;margin-bottom:10px;cursor:pointer;{% unless current_variant.available %}opacity:.5;pointer-events:none;{% endunless %}">
         {%- if current_variant.available -%}Add to Cart — {{ current_variant.price | money }}{%- else -%}Sold Out{%- endif -%}
       </button>
