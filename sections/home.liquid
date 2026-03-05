@@ -266,11 +266,17 @@
                 <button type="submit" class="os-cta" id="pk-atc-btn">
                   <span id="os-cta-t">Add 1 Tin to Cart</span><span class="os-arr">→</span>
                 </button>
+                <button type="button" class="os-cta os-cta-buy" id="pk-buy-btn" onclick="pkBuyNow()">
+                  <span id="os-buy-t">Buy Now</span><span class="os-arr">⚡</span>
+                </button>
                 <div class="os-express">{{ form | payment_button }}</div>
               {%- endform -%}
             {%- else -%}
               <button class="os-cta" onclick="addToCart()">
                 <span id="os-cta-t">Add 1 Tin to Cart</span><span class="os-arr">→</span>
+              </button>
+              <button class="os-cta os-cta-buy" onclick="pkBuyNow()">
+                <span>Buy Now</span><span class="os-arr">⚡</span>
               </button>
             {%- endif -%}
             <div class="os-micro"><span>🔒 Secure</span><span>↩️ 30-day returns</span><span>🚚 Ships 1-2 days</span></div>
@@ -484,7 +490,7 @@
     <div class="ft-brand"><span class="n-logo-text" style="font-size:1.1rem;color:var(--foot-text)">Peakasy</span><p class="ft-desc">Ancient mushroom wisdom meets modern coffee craft. Fuel your focus, naturally.</p></div>
     <div class="ft-col"><h4>Shop</h4><a onclick="goOrder()">Mushroom Fuse Coffee</a><a href="/cart">Cart</a></div>
     <div class="ft-col"><h4>Company</h4><a href="/pages/about-us">About Us</a><a>Blog</a></div>
-    <div class="ft-col"><h4>Policies</h4><a href="/pages/shipping-policy">Shipping Policy</a><a href="/pages/refund-policy">Refund Policy</a><a href="/policies/terms-of-service">Terms of Service</a><a href="/policies/privacy-policy">Privacy Policy</a><a href="/policies/purchase-options-cancellation-policy">Cancellation Policy</a></div>
+    <div class="ft-col"><h4>Policies</h4><a href="/policies/shipping-policy">Shipping Policy</a><a href="/pages/refund-policy">Refund Policy</a><a href="/policies/terms-of-service">Terms of Service</a><a href="/policies/privacy-policy">Privacy Policy</a><a href="/policies/purchase-options-cancellation-policy">Cancellation Policy</a></div>
     <div class="ft-col"><h4>Support</h4><a>FAQ</a><a>Contact Us</a></div>
   </div>
   <div class="ft-btm"><span>© 2026 Peakasy. All rights reserved.</span><span>Focus · Energy · Balance</span></div>

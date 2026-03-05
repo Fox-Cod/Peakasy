@@ -405,6 +405,61 @@ function osPick(el, q) {
 }
 
 /* ═══════════════════════════════
+   BUY NOW — add to cart then redirect to /checkout
+═══════════════════════════════ */
+function pkBuyNow() {
+	var variantId =
+		window.PEAKASY && window.PEAKASY.variantId
+			? window.PEAKASY.variantId
+			: null
+	var varInput = document.getElementById('pk-variant-id')
+	if (varInput && varInput.value) variantId = parseInt(varInput.value, 10)
+	if (!variantId) {
+		toast('Product not configured', '⚙️')
+		return
+	}
+
+	var qty =
+		parseInt((document.getElementById('pk-qty') || {}).value || '1') ||
+		osQty ||
+		1
+
+	var btn = document.getElementById('pk-buy-btn')
+	var btnTxt = document.getElementById('os-buy-t')
+	if (btn) { btn.disabled = true; btn.classList.add('loading') }
+	if (btnTxt) btnTxt.textContent = 'Processing...'
+
+	var body = { id: variantId, quantity: qty }
+	if (window._pkPurchaseType === 'subscribe') {
+		var planInput = document.getElementById('pk-selling-plan')
+		if (planInput && planInput.value) {
+			body.selling_plan = parseInt(planInput.value, 10)
+		}
+	}
+
+	fetch('/cart/add.js', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+		body: JSON.stringify(body),
+	})
+		.then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d } }) })
+		.then(function (res) {
+			if (!res.ok || (res.data.status && res.data.status >= 400)) {
+				if (btn) { btn.disabled = false; btn.classList.remove('loading') }
+				if (btnTxt) btnTxt.textContent = 'Buy Now'
+				toast(res.data.description || 'Something went wrong. Please try again.', '⚠️')
+				return
+			}
+			window.location.href = '/checkout'
+		})
+		.catch(function () {
+			if (btn) { btn.disabled = false; btn.classList.remove('loading') }
+			if (btnTxt) btnTxt.textContent = 'Buy Now'
+			toast('Something went wrong. Please try again.', '⚠️')
+		})
+}
+
+/* ═══════════════════════════════
    CORE CART FUNCTION — used by all Add to Cart buttons
 ═══════════════════════════════ */
 function pkAddToCart(variantId, qty, btn, btnTxt) {

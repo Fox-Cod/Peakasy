@@ -498,6 +498,13 @@ body.light .mdot{background:rgba(255,255,255,.5);}
 .os-cta:hover{background:var(--gl);transform:translateY(-2px);box-shadow:0 12px 28px rgba(200,169,110,.38);}
 .os-arr{transition:transform .2s;}
 .os-cta:hover .os-arr{transform:translateX(4px);}
+.os-cta-buy{
+  background:transparent;color:var(--gold);
+  border:1.5px solid rgba(200,169,110,.5);
+  margin-top:8px;
+}
+.os-cta-buy:hover{background:rgba(200,169,110,.08);box-shadow:0 8px 20px rgba(200,169,110,.2);transform:translateY(-2px);}
+.os-cta.loading{opacity:.65;pointer-events:none;}
 .os-micro{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;font-size:.65rem;color:var(--muted);margin-top:10px;}
 /* bottom bar */
 .os-bar{

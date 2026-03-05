@@ -1,0 +1,219 @@
+<!-- ═══ ABOUT US — PEAKASY ═══ -->
+<style>
+.au-hero{
+  position:relative;min-height:400px;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:100px 28px 80px;overflow:hidden;
+}
+.au-hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,169,110,.08) 0%, transparent 70%);
+  pointer-events:none;
+}
+.au-hero-tag{font-size:.72rem;font-weight:700;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:14px;}
+.au-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.4rem,6vw,4rem);font-weight:700;color:var(--text);line-height:1.1;margin-bottom:20px;}
+.au-hero h1 em{color:var(--gold);font-style:italic;}
+.au-hero-sub{max-width:520px;margin:0 auto;font-size:1.05rem;color:var(--text2);line-height:1.7;}
+
+.au-story{max-width:1080px;margin:0 auto;padding:80px 28px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;}
+.au-story-img{border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:var(--surf);display:flex;align-items:center;justify-content:center;}
+.au-story-img img{width:100%;height:100%;object-fit:contain;mix-blend-mode:screen;}
+.au-story-body p.tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+.au-story-body h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.2;}
+.au-story-body p{color:var(--text2);line-height:1.75;font-size:.95rem;margin-bottom:16px;}
+
+.au-values{background:var(--surf);padding:80px 28px;}
+.au-values-inner{max-width:1080px;margin:0 auto;}
+.au-values-inner .tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+.au-values-inner h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--text);margin-bottom:48px;line-height:1.2;}
+.au-vals{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.au-val{background:var(--bg);border:1px solid var(--bor);border-radius:16px;padding:28px 24px;}
+.au-val-ico{font-size:2rem;margin-bottom:14px;}
+.au-val h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;color:var(--text);margin-bottom:8px;}
+.au-val p{font-size:.88rem;color:var(--text2);line-height:1.65;}
+
+.au-timeline{max-width:760px;margin:0 auto;padding:80px 28px;}
+.au-timeline .tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+.au-timeline h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--text);margin-bottom:48px;line-height:1.2;}
+.au-tl{position:relative;padding-left:28px;}
+.au-tl::before{content:'';position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:var(--bor);}
+.au-tl-item{position:relative;margin-bottom:36px;}
+.au-tl-item::before{content:'';position:absolute;left:-24px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);}
+.au-tl-y{font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;}
+.au-tl-t{font-weight:600;color:var(--text);margin-bottom:4px;font-size:.95rem;}
+.au-tl-d{font-size:.88rem;color:var(--text2);line-height:1.6;}
+
+.au-team{background:var(--surf);padding:80px 28px;}
+.au-team-inner{max-width:1080px;margin:0 auto;}
+.au-team-inner .tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+.au-team-inner h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:700;color:var(--text);margin-bottom:48px;line-height:1.2;}
+.au-tm{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.au-tmc{background:var(--bg);border:1px solid var(--bor);border-radius:16px;padding:28px 24px;text-align:center;}
+.au-tmc-av{width:72px;height:72px;border-radius:50%;background:rgba(200,169,110,.1);border:2px solid rgba(200,169,110,.2);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 14px;}
+.au-tmc h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.au-tmc-role{font-size:.75rem;color:var(--gold);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;}
+.au-tmc p{font-size:.85rem;color:var(--text2);line-height:1.6;}
+
+.au-mission{max-width:760px;margin:0 auto;padding:80px 28px;text-align:center;}
+.au-mission .tag{font-size:.72rem;font-weight:700;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;display:block;}
+.au-mission h2{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;color:var(--text);margin-bottom:24px;line-height:1.2;}
+.au-mission blockquote{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-style:italic;color:var(--text);line-height:1.55;border-left:3px solid var(--gold);padding-left:24px;text-align:left;margin:32px 0;}
+.au-mission p{color:var(--text2);line-height:1.75;font-size:.95rem;margin-bottom:16px;}
+.au-mission .btn-g{display:inline-block;text-decoration:none;margin-top:16px;padding:14px 32px;}
+
+.au-stats{background:var(--surf);padding:60px 28px;}
+.au-stats-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;text-align:center;}
+.au-stat-n{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--gold);}
+.au-stat-l{font-size:.82rem;color:var(--text2);margin-top:4px;}
+
+@media(max-width:768px){
+  .au-story{grid-template-columns:1fr;gap:32px;padding:56px 20px;}
+  .au-vals{grid-template-columns:1fr;}
+  .au-tm{grid-template-columns:1fr;}
+  .au-stats-inner{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+
+<!-- Hero -->
+<section class="au-hero">
+  <div class="au-hero-bg"></div>
+  <div>
+    <p class="au-hero-tag">Our Story</p>
+    <h1>Ancient Wisdom.<br><em>Modern Ritual.</em></h1>
+    <p class="au-hero-sub">Peakasy was born from a simple belief — that your morning cup should do more than wake you up. It should prepare you to peak.</p>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="au-stats">
+  <div class="au-stats-inner">
+    <div><div class="au-stat-n">847+</div><div class="au-stat-l">Happy Customers</div></div>
+    <div><div class="au-stat-n">30+</div><div class="au-stat-l">Countries Shipped</div></div>
+    <div><div class="au-stat-n">4.9★</div><div class="au-stat-l">Average Rating</div></div>
+    <div><div class="au-stat-n">100%</div><div class="au-stat-l">Organic Extracts</div></div>
+  </div>
+</div>
+
+<!-- Story -->
+<div class="au-story">
+  <div class="au-story-img">
+    {%- assign story_prod = all_products['mushroom-fuse-coffee'] -%}
+    {%- if story_prod.featured_image -%}
+      <img src="{{ story_prod.featured_image | img_url: 'master' }}" alt="Peakasy Mushroom Fuse Coffee">
+    {%- else -%}
+      <img src="{{ 'Mush-Coffe-trans.png' | asset_url }}" alt="Peakasy Mushroom Fuse Coffee">
+    {%- endif -%}
+  </div>
+  <div class="au-story-body">
+    <p class="tag">How It Started</p>
+    <h2>The Search for Something Better</h2>
+    <p>It started with a problem most of us know well — the 3pm crash, the jittery espresso, the focus that came and went. We were high-performing people living on caffeine that wasn't working.</p>
+    <p>We discovered ancient mushroom traditions used for centuries across Asia — Lion's Mane for mental clarity, Chaga for immune resilience. We then asked: what if the world's finest instant coffee was fused with these functional adaptogens?</p>
+    <p>After 18 months of R&D with a team of nutritionists and coffee sourcing experts, Peakasy was born. Single-origin Papua New Guinea beans, freeze-dried to preserve full flavor, fused with certified organic mushroom extracts. Ready in 60 seconds.</p>
+  </div>
+</div>
+
+<!-- Values -->
+<div class="au-values">
+  <div class="au-values-inner">
+    <span class="tag">What We Stand For</span>
+    <h2>Our Core Values</h2>
+    <div class="au-vals">
+      <div class="au-val">
+        <div class="au-val-ico">🔬</div>
+        <h3>Science-First</h3>
+        <p>Every ingredient is backed by peer-reviewed research. We dose our extracts at clinically relevant levels — not sprinkled in for the label.</p>
+      </div>
+      <div class="au-val">
+        <div class="au-val-ico">🌿</div>
+        <h3>Uncompromising Quality</h3>
+        <p>Certified organic mushroom extracts, third-party lab tested every batch, and single-origin coffee sourced from ethical farms in Papua New Guinea.</p>
+      </div>
+      <div class="au-val">
+        <div class="au-val-ico">⚡</div>
+        <h3>Radical Transparency</h3>
+        <p>Full ingredient disclosure. No proprietary blends that hide weak dosing. You know exactly what's in your cup and why it's there.</p>
+      </div>
+      <div class="au-val">
+        <div class="au-val-ico">🌍</div>
+        <h3>Sustainable Sourcing</h3>
+        <p>We partner only with farms that practice regenerative agriculture. Our packaging is minimal and recyclable — planet first, always.</p>
+      </div>
+      <div class="au-val">
+        <div class="au-val-ico">🤝</div>
+        <h3>Customer Obsessed</h3>
+        <p>30-day no-questions returns. Real humans answer every support message within 24 hours. We win only when you peak.</p>
+      </div>
+      <div class="au-val">
+        <div class="au-val-ico">🏆</div>
+        <h3>Crafted in the USA</h3>
+        <p>Formulated, blended and packaged in our FDA-registered US facility. Every batch is tested for purity, potency and consistency.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Timeline -->
+<div class="au-timeline">
+  <span class="tag">Journey</span>
+  <h2>Built One Cup at a Time</h2>
+  <div class="au-tl">
+    <div class="au-tl-item">
+      <div class="au-tl-y">2022</div>
+      <div class="au-tl-t">The Idea</div>
+      <div class="au-tl-d">Frustrated by the gap between great coffee and functional wellness, our founders began exploring adaptogenic mushroom research and single-origin sourcing.</div>
+    </div>
+    <div class="au-tl-item">
+      <div class="au-tl-y">2023</div>
+      <div class="au-tl-t">R&D & Formulation</div>
+      <div class="au-tl-d">18 months of development with nutritionists and coffee experts. Over 40 test batches before landing on the perfect ratio: 70% PNG single-origin, 15% Lion's Mane, 15% Chaga extract.</div>
+    </div>
+    <div class="au-tl-item">
+      <div class="au-tl-y">2024</div>
+      <div class="au-tl-t">Launch &amp; Community</div>
+      <div class="au-tl-d">Mushroom Fuse Instant Coffee launched to a community of early adopters. First 500 units sold in 72 hours. 4.9-star rating from day one.</div>
+    </div>
+    <div class="au-tl-item">
+      <div class="au-tl-y">2025</div>
+      <div class="au-tl-t">Growing Global</div>
+      <div class="au-tl-d">Shipping to 30+ countries. 847 verified reviews. Subscription program launched. New formulas in development for sleep and performance.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Team -->
+<div class="au-team">
+  <div class="au-team-inner">
+    <span class="tag">The People</span>
+    <h2>Behind Every Cup</h2>
+    <div class="au-tm">
+      <div class="au-tmc">
+        <div class="au-tmc-av">🧠</div>
+        <h3>Alex Morgan</h3>
+        <div class="au-tmc-role">Co-founder &amp; CEO</div>
+        <p>Former neuroscience researcher turned entrepreneur. Obsessed with cognitive performance and the intersection of ancient medicine and modern science.</p>
+      </div>
+      <div class="au-tmc">
+        <div class="au-tmc-av">☕</div>
+        <h3>Sofia Chen</h3>
+        <div class="au-tmc-role">Head of Sourcing</div>
+        <p>10+ years sourcing specialty coffee from Papua New Guinea, Colombia and Ethiopia. Responsible for building our direct relationships with ethical farm partners.</p>
+      </div>
+      <div class="au-tmc">
+        <div class="au-tmc-av">🌿</div>
+        <h3>Dr. James Osei</h3>
+        <div class="au-tmc-role">Formulation Advisor</div>
+        <p>PhD in nutritional biochemistry. Specialist in adaptogenic compounds. Ensures every extract in Peakasy is dosed for measurable, real-world effect.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mission -->
+<div class="au-mission">
+  <span class="tag">Our Mission</span>
+  <h2>We Exist to Help You Peak</h2>
+  <blockquote>"The most high-performing people in history shared one thing — a daily ritual. We're building yours."</blockquote>
+  <p>Peakasy isn't just a coffee. It's a commitment to showing up at your best — mentally sharp, physically grounded, and ready for what the day demands.</p>
+  <p>We believe functional wellness shouldn't require a pharmacy degree or a complicated stack of supplements. One cup, 60 seconds, every morning. That's enough to change everything.</p>
+  <a href="/" class="btn-g" onclick="event.preventDefault();goOrder()" style="display:inline-block;text-decoration:none;margin-top:16px;padding:14px 32px;">Start Your Ritual →</a>
+</div>
