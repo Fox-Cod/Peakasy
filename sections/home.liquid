@@ -39,31 +39,23 @@
       </div>
     </div>
   </div>
-  <div class="h-strip">
-    <div class="hs">🌿 <b>100% Organic</b>&nbsp;Mushrooms</div>
-    <div class="hs">🔬 <b>Lab Tested</b>&nbsp;Every Batch</div>
-    <div class="hs">🇺🇸 <b>Made in USA</b>&nbsp;Freeze-Dried</div>
-    <div class="hs">📦 <b>30 Servings</b>&nbsp;Per Tin</div>
-    <div class="hs">⚡ <b>No Jitters</b>&nbsp;No Crash</div>
-  </div>
-  <div class="h-wave"><svg viewBox="0 0 1440 60" preserveAspectRatio="none" fill="var(--bg2)"><path d="M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z"/></svg></div>
 </section>
 
-<!-- MARQUEE -->
-<div class="mbar"><div class="mtrack">
-  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
-  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
-  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
-  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
-  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
-  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
-</div></div>
+<div class="h-strip">
+  <div class="hs">🌿 <b>100% Organic</b>&nbsp;Mushrooms</div>
+  <div class="hs">🔬 <b>Lab Tested</b>&nbsp;Every Batch</div>
+  <div class="hs">🇺🇸 <b>Made in USA</b>&nbsp;Freeze-Dried</div>
+  <div class="hs">📦 <b>30 Servings</b>&nbsp;Per Tin</div>
+  <div class="hs">⚡ <b>No Jitters</b>&nbsp;No Crash</div>
+</div>
 
-<!-- WAVE DIVIDER -->
-<div class="wave-div">
-  <svg viewBox="0 0 1440 54" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,16 C240,48 480,0 720,20 C960,40 1200,8 1440,24 L1440,54 L0,54 Z" fill="var(--bg)"/>
-  </svg>
+<div class="mtrack">
+  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
+  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
+  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
+  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
+  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
+  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
 </div>
 
 <!-- PRODUCT -->
@@ -271,6 +263,11 @@
                   <span id="os-cta-t">Add 1 Tin to Cart</span><span class="os-arr">→</span>
                 </button>
                 <div class="os-express">{{ form | payment_button }}</div>
+                <div class="os-pay-icons">
+                  {%- for type in shop.enabled_payment_types -%}
+                    {{ type | payment_type_svg_tag: class: 'opi' }}
+                  {%- endfor -%}
+                </div>
               {%- endform -%}
             {%- else -%}
               <button class="os-cta" onclick="addToCart()">

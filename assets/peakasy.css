@@ -436,26 +436,19 @@ body.light .mdot{background:rgba(255,255,255,.5);}
 }
 .ocan img{height:190px;width:auto;display:block;
   filter:drop-shadow(0 12px 28px rgba(0,0,0,.55));}
-/* Gold pulse on front can when new can settles */
-@keyframes goldPulse{
-  0%  {filter:drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 0px rgba(200,169,110,0));}
-  35% {filter:drop-shadow(0 8px 20px rgba(0,0,0,.3)) drop-shadow(0 0 30px rgba(200,169,110,.8));}
-  100%{filter:drop-shadow(0 12px 28px rgba(0,0,0,.55)) drop-shadow(0 0 0px rgba(200,169,110,0));}
-}
-.ocan--pulse img{animation:goldPulse .6s ease-out forwards;}
 .os-can-lbl{font-family:Cormorant Garamond,serif;font-size:.95rem;font-weight:700;
   color:var(--gold);text-align:center;margin-bottom:3px;z-index:1;position:relative;}
 .os-can-sub{font-size:.69rem;color:var(--muted);text-align:center;z-index:1;position:relative;}
-/* mini reviews */
-.os-mini-revs{display:flex;flex-direction:column;gap:6px;margin-top:14px;width:100%;max-width:210px;z-index:1;position:relative;}
+/* supply info pills */
+.os-mini-revs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;width:100%;max-width:220px;z-index:1;position:relative;}
 .omr{
-  background:rgba(200,169,110,.07);border:1px solid rgba(200,169,110,.14);
-  border-radius:8px;padding:7px 11px;display:flex;align-items:flex-start;gap:7px;
-  animation:omrIn .38s ease both;
+  background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.18);
+  border-radius:20px;padding:5px 11px;display:flex;align-items:center;gap:5px;
+  animation:omrIn .3s ease both;
 }
-@keyframes omrIn{from{opacity:0;transform:translateX(-8px);}to{opacity:1;transform:none;}}
-.omr-s{color:var(--gold);font-size:.63rem;flex-shrink:0;margin-top:1px;}
-.omr-t{font-size:.67rem;color:var(--text2);line-height:1.4;}
+@keyframes omrIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.omr-ico{font-size:.75rem;line-height:1;}
+.omr-t{font-size:.67rem;color:var(--text2);white-space:nowrap;}
 
 /* RIGHT — qty pills + CTA */
 .os-r{display:flex;flex-direction:column;justify-content:space-between;padding:30px 34px;gap:18px;}
@@ -1751,6 +1744,12 @@ button, .btn-g, .btn-o { cursor: pointer; }
   border-radius: 50px !important;
   min-height: 44px !important;
 }
+/* Hide "More payment options" link */
+.shopify-payment-button__more-options { display:none !important; }
+/* Payment icons row */
+.os-pay-icons{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:12px;}
+.os-pay-icons .opi{height:22px;width:auto;border-radius:4px;opacity:0.65;transition:opacity .2s;}
+.os-pay-icons .opi:hover{opacity:1;}
 
 /* ═══════════════════════════════
    SUBSCRIPTION TOGGLE

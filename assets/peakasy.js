@@ -125,11 +125,12 @@ var REVS = [
   {name:"Priya S.", s:"★★★★★", t:'"Best thing I gave myself."'},
   {name:"Luca B.", s:"★★★★★", t:'"Smooth, rich and functional."'},
 ];
-var MINI = [
-  "Sharpest I've felt in years. — Alex P.",
-  "Replaced my regular coffee. — Sam K.",
-  "Calm energy all day. — Dana R.",
-];
+// Supply info shown under cans based on selected quantity
+var SUPPLY_INFO = {
+  1: [{ico:'☕', txt:'30 servings'}, {ico:'📅', txt:'1-month supply'}],
+  2: [{ico:'☕', txt:'60 servings'}, {ico:'📅', txt:'2-month supply'}, {ico:'⭐', txt:'Most popular'}],
+  3: [{ico:'☕', txt:'90 servings'}, {ico:'📅', txt:'3-month supply'}, {ico:'🚚', txt:'Free shipping'}]
+};
 
 // Can layouts: all centered (left:50%), differentiated by rotate/scale/z
 // rotate: negative = lean left, positive = lean right
@@ -158,15 +159,6 @@ function _makeCan(src) {
   d.style.cssText = 'position:absolute;bottom:0;left:50%;z-index:0;opacity:0;transform:' + _canTf(20, 0, 0) + ';transform-origin:bottom center;';
   d.innerHTML = '<img src="' + src + '" alt="Peakasy" style="height:180px;width:auto;display:block;">';
   return d;
-}
-function _pulseFront(stage) {
-  var cans = stage.querySelectorAll('.ocan'), front = null, maxZ = 0;
-  cans.forEach(function(c) { var z = parseInt(c.style.zIndex) || 0; if (z > maxZ) { maxZ = z; front = c; } });
-  if (!front) return;
-  front.classList.remove('ocan--pulse');
-  void front.offsetWidth; // force reflow to restart animation
-  front.classList.add('ocan--pulse');
-  setTimeout(function() { front.classList.remove('ocan--pulse'); }, 650);
 }
 
 function renderCans() {
@@ -199,8 +191,6 @@ function renderCans() {
         setTimeout(function() { _applyCanPos(el, pos); }, 16 + delay);
       })(d, positions[i], i * 60);
     }
-    // Gold pulse on front can after animation completes
-    setTimeout(function() { _pulseFront(stage); }, 420 + (n - existing) * 60);
 
   } else if (n < existing) {
     // Removing cans: exit animation on surplus, reposition remaining
@@ -224,9 +214,9 @@ function renderCans() {
   if (lbl) lbl.textContent = osQty + ' \u00d7 Mushroom Fuse Coffee';
   var mr = document.getElementById('mini-revs');
   if (mr) {
-    var show = osQty <= 1 ? 1 : osQty <= 2 ? 2 : 3;
-    mr.innerHTML = MINI.slice(0, show).map(function(r, i) {
-      return '<div class="omr" style="animation-delay:' + (i * 0.1) + 's"><span class="omr-s">★★★★★</span><span class="omr-t">' + r + '</span></div>';
+    var info = SUPPLY_INFO[Math.min(osQty, 3)] || SUPPLY_INFO[1];
+    mr.innerHTML = info.map(function(item, i) {
+      return '<div class="omr" style="animation-delay:' + (i * 0.08) + 's"><span class="omr-ico">' + item.ico + '</span><span class="omr-t">' + item.txt + '</span></div>';
     }).join('');
   }
 }
