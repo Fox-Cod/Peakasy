@@ -1095,58 +1095,16 @@ function toast(msg, icon) {
 
 // ═══ WATERFALL REVIEWS ═══
 ;(function () {
-	// Placeholder photo colours — simulate customer photos with canvas data URIs
-	function makePhotoUrl(hue, txt) {
-		var c = document.createElement('canvas')
-		c.width = 400
-		c.height = 220
-		var ctx = c.getContext('2d')
-		// gradient bg
-		var g = ctx.createLinearGradient(0, 0, 400, 220)
-		g.addColorStop(0, 'hsl(' + hue + ',28%,16%)')
-		g.addColorStop(1, 'hsl(' + (hue + 30) + ',22%,22%)')
-		ctx.fillStyle = g
-		ctx.fillRect(0, 0, 400, 220)
-		// subtle grid pattern
-		ctx.strokeStyle = 'rgba(200,169,110,.07)'
-		ctx.lineWidth = 1
-		for (var x = 0; x < 400; x += 40) {
-			ctx.beginPath()
-			ctx.moveTo(x, 0)
-			ctx.lineTo(x, 220)
-			ctx.stroke()
-		}
-		for (var y = 0; y < 220; y += 40) {
-			ctx.beginPath()
-			ctx.moveTo(0, y)
-			ctx.lineTo(400, y)
-			ctx.stroke()
-		}
-		// product emoji / icon
-		ctx.font = '64px serif'
-		ctx.textAlign = 'center'
-		ctx.textBaseline = 'middle'
-		ctx.globalAlpha = 0.55
-		ctx.fillText(txt, 200, 100)
-		ctx.globalAlpha = 1
-		// caption
-		ctx.fillStyle = 'rgba(200,169,110,.4)'
-		ctx.font = '600 11px DM Sans,sans-serif'
-		ctx.letterSpacing = '2px'
-		ctx.fillText('CUSTOMER PHOTO', 200, 196)
-		return c.toDataURL('image/jpeg', 0.7)
-	}
-
-	// Pre-generate photo urls
+	// Real lifestyle photos (picsum.photos — stable, no auth needed)
 	window.PHOTOS = [
-		{ url: makePhotoUrl(30, '☕'), lbl: 'Morning ritual' },
-		{ url: makePhotoUrl(120, '🍄'), lbl: 'Unboxing' },
-		{ url: makePhotoUrl(200, '🧠'), lbl: 'Work session' },
-		{ url: makePhotoUrl(45, '🌿'), lbl: 'Ingredient close-up' },
-		{ url: makePhotoUrl(280, '✦'), lbl: 'Packaging detail' },
-		{ url: makePhotoUrl(160, '🌅'), lbl: 'Morning view' },
-		{ url: makePhotoUrl(15, '⚡'), lbl: 'Pre-workout' },
-		{ url: makePhotoUrl(240, '🌙'), lbl: 'Evening ritual' },
+		{ url: 'https://picsum.photos/seed/pk-coffee1/400/280', lbl: 'Morning ritual' },
+		{ url: 'https://picsum.photos/seed/pk-mush2/400/280', lbl: 'Unboxing' },
+		{ url: 'https://picsum.photos/seed/pk-desk3/400/280', lbl: 'Work session' },
+		{ url: 'https://picsum.photos/seed/pk-nature4/400/280', lbl: 'Ingredient close-up' },
+		{ url: 'https://picsum.photos/seed/pk-pack5/400/280', lbl: 'Packaging detail' },
+		{ url: 'https://picsum.photos/seed/pk-morn6/400/280', lbl: 'Morning view' },
+		{ url: 'https://picsum.photos/seed/pk-fit7/400/280', lbl: 'Pre-workout' },
+		{ url: 'https://picsum.photos/seed/pk-eve8/400/280', lbl: 'Evening ritual' },
 	]
 
 	// Global photo opener for review cards
@@ -1336,6 +1294,50 @@ function toast(msg, icon) {
 			feat: false,
 			photo: 6,
 		},
+		{
+			nm: 'Tom W.',
+			loc: 'Chicago, US',
+			av: '👨',
+			st: '★★★★★',
+			txt: 'Honestly didn\'t expect much. Two weeks in and I\'m recommending it to everyone at work.',
+			tag: 'Focus',
+			ago: '2d ago',
+			feat: false,
+			photo: null,
+		},
+		{
+			nm: 'Sophie L.',
+			loc: 'Vancouver, CA',
+			av: '👩',
+			st: '★★★★★',
+			txt: 'I brew it every morning before my run. Clean energy with zero crash afterward.',
+			tag: 'Energy',
+			ago: '4d ago',
+			feat: false,
+			photo: null,
+		},
+		{
+			nm: 'Ravi P.',
+			loc: 'Singapore',
+			av: '🧑',
+			st: '★★★★★',
+			txt: 'Switched from espresso 6 weeks ago. Better focus, sleep feels deeper too.',
+			tag: 'Wellness',
+			ago: '1w ago',
+			feat: false,
+			photo: null,
+		},
+		{
+			nm: 'Ingrid S.',
+			loc: 'Oslo, NO',
+			av: '👩',
+			st: '★★★★★',
+			txt: 'Subscribed after my first tin. The flavor is genuinely exceptional for instant coffee.',
+			tag: 'Taste',
+			ago: '2w ago',
+			feat: false,
+			photo: null,
+		},
 	]
 
 	var cols = [
@@ -1385,28 +1387,28 @@ function toast(msg, icon) {
 	})
 
 	function makeCard(r, delay) {
-		var p = PHOTOS[r.photo % PHOTOS.length]
 		var d = document.createElement('div')
 		d.className = 'wrc' + (r.feat ? ' feat' : '')
 		d.style.animationDelay = (delay || 0) + 'ms'
 
-		var pi = r.photo % PHOTOS.length
-		var photoHtml =
-			'<div class="wrc-photo" data-pi="' +
-			pi +
-			'" data-src="' +
-			p.url +
-			'" data-cap="' +
-			r.nm +
-			' from ' +
-			r.loc +
-			'" onclick="event.stopPropagation();revPhotoOpen(this)"><img src="' +
-			p.url +
-			'" alt="' +
-			r.nm +
-			'"><div class="wrc-photo-lbl">' +
-			p.lbl +
-			'</div></div>'
+		var photoHtml = ''
+		if (r.photo != null && r.photo >= 0) {
+			var p = PHOTOS[r.photo % PHOTOS.length]
+			photoHtml =
+				'<div class="wrc-photo" data-src="' +
+				p.url +
+				'" data-cap="' +
+				r.nm +
+				' from ' +
+				r.loc +
+				'" onclick="event.stopPropagation();revPhotoOpen(this)"><img src="' +
+				p.url +
+				'" alt="' +
+				r.nm +
+				'" loading="lazy"><div class="wrc-photo-lbl">' +
+				p.lbl +
+				'</div></div>'
+		}
 
 		d.innerHTML =
 			photoHtml +

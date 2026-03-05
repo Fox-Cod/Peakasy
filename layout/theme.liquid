@@ -125,8 +125,8 @@
     <div class="n-links">
       <a class="nl{% if template == 'index' %} on{% endif %}" href="{{ routes.root_url }}">Home</a>
       <a class="nl" href="#order-sec" onclick="event.preventDefault();goOrder()">Shop</a>
-      <a class="nl" href="/pages/about">About</a>
-      <a class="nl" href="/pages/shipping">Shipping</a>
+      <a class="nl" href="/pages/about-us">About</a>
+      <a class="nl" href="/pages/shipping-policy">Shipping</a>
     </div>
   </div>
 
@@ -148,8 +148,8 @@
 <div class="n-mob" id="nmob">
   <a class="nl" href="{{ routes.root_url }}">Home</a>
   <a class="nl" href="#order-sec" onclick="event.preventDefault();document.getElementById('nmob').classList.remove('on');goOrder()">Shop</a>
-  <a class="nl" href="/pages/about">About</a>
-  <a class="nl" href="/pages/shipping">Shipping</a>
+  <a class="nl" href="/pages/about-us">About</a>
+  <a class="nl" href="/pages/shipping-policy">Shipping</a>
   <a class="nl" href="https://account.peakasy.com">My Account</a>
   <a class="nl" href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
 </div>
