@@ -260,6 +260,7 @@
                 <input type="hidden" name="id" id="pk-variant-id" value="{{ sec_variant.id }}">
                 <input type="hidden" name="quantity" id="pk-qty" value="1">
                 <!-- Shopify Subscriptions: selling_plan ID, populated from product selling plans -->
+                <div class="subscriptions_app_embed_block"></div>
                 {%- assign sub_plan = sec_prod.selling_plan_groups.first.selling_plans.first -%}
                 <input type="hidden" name="" id="pk-selling-plan" value="{{ sub_plan.id | default: '' }}">
                 <button type="submit" class="os-cta" id="pk-atc-btn">
