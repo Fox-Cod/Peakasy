@@ -203,19 +203,42 @@
           <div>
             <div class="os-qty-lbl" style="margin-bottom:14px">Select Quantity</div>
             <div class="os-pills">
+              <!-- 1 TIN -->
               <div class="osp sel" data-q="1" onclick="osPick(this,1)">
-                <div class="osp-l"><div class="osp-chk">✓</div><div><div class="osp-n">1 Tin</div><div class="osp-d">Try it · 30 servings</div></div></div>
-                <div class="osp-r"><div class="osp-p">{{ section_product.price | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+                <div class="osp-top">
+                  <div class="osp-l"><div class="osp-chk">✓</div><div><div class="osp-n">1 Tin</div><div class="osp-d">Try it · 30 servings</div></div></div>
+                  <div class="osp-r"><div class="osp-p">{{ section_product.price | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+                </div>
+                <div class="osp-bonuses">
+                  <span class="osp-bon osp-bon-pdf">📘 Free 30-Day Guide</span>
+                </div>
               </div>
-              <div class="osp" data-q="2" onclick="osPick(this,2)">
-                <div class="osp-bdg">Popular</div>
-                <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">2 Tins</div><div class="osp-d">60-day supply</div></div></div>
-                <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 2 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+              <!-- 2 TINS — FEATURED -->
+              <div class="osp osp-feat" data-q="2" onclick="osPick(this,2)">
+                <div class="osp-bdg osp-bdg-feat">🏆 Most Popular</div>
+                <div class="osp-top">
+                  <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">2 Tins</div><div class="osp-d">60-day · The Sweet Spot</div></div></div>
+                  <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 2 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+                </div>
+                <div class="osp-bonuses">
+                  <span class="osp-bon osp-bon-pdf">📘 Free 30-Day Guide</span>
+                  <span class="osp-bon osp-bon-caps">🍄 Lion's Mane Capsules</span>
+                  <span class="osp-bon osp-bon-ship">🚚 Free Shipping</span>
+                </div>
               </div>
+              <!-- 3 TINS -->
               <div class="osp" data-q="3" onclick="osPick(this,3)">
                 <div class="osp-bdg" style="background:var(--gl)">Best Value</div>
-                <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">3 Tins</div><div class="osp-d">90-day · Free ship</div></div></div>
-                <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 3 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+                <div class="osp-top">
+                  <div class="osp-l"><div class="osp-chk"></div><div><div class="osp-n">3 Tins</div><div class="osp-d">90-day supply</div></div></div>
+                  <div class="osp-r"><div class="osp-p">{{ section_product.price | times: 3 | money }}</div><div class="osp-pp">{{ section_product.price | divided_by: 30 | money }}/serving</div></div>
+                </div>
+                <div class="osp-bonuses">
+                  <span class="osp-bon osp-bon-pdf">📘 Free 30-Day Guide</span>
+                  <span class="osp-bon osp-bon-caps">🍄 Lion's Mane Capsules</span>
+                  <span class="osp-bon osp-bon-ship">🚚 Free Shipping</span>
+                  <span class="osp-bon osp-bon-mct">🌿 MCT Oil Powder</span>
+                </div>
               </div>
             </div>
           </div>

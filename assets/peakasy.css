@@ -482,6 +482,36 @@ body.light .mdot{background:rgba(255,255,255,.5);}
   font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
   padding:2px 8px;border-radius:0 0 6px 6px;
 }
+/* Featured (2nd) option */
+.osp-feat{
+  border-color:var(--gold);
+  box-shadow:0 0 0 1px rgba(200,169,110,.25),0 8px 28px rgba(200,169,110,.13);
+}
+.osp-feat::before{transform:translateX(0)!important;}
+.osp-bdg-feat{
+  background:linear-gradient(120deg,#c8a96e,#e8cb82);
+  font-size:.6rem;padding:3px 11px;
+  letter-spacing:.08em;
+}
+/* Pill layout with bonus row */
+.osp{ flex-wrap:wrap; }
+.osp-top{
+  display:flex;align-items:center;justify-content:space-between;width:100%;
+}
+/* Bonus chips row */
+.osp-bonuses{
+  display:flex;flex-wrap:wrap;gap:5px;width:100%;margin-top:9px;padding-top:9px;
+  border-top:1px solid var(--bor);
+}
+.osp-feat .osp-bonuses{border-top-color:rgba(200,169,110,.2);}
+.osp-bon{
+  font-size:.62rem;font-weight:600;padding:2px 8px;border-radius:20px;
+  display:inline-flex;align-items:center;gap:3px;
+}
+.osp-bon-pdf {color:rgba(100,180,255,.9);background:rgba(100,180,255,.08);border:1px solid rgba(100,180,255,.18);}
+.osp-bon-caps{color:var(--gold);background:rgba(200,169,110,.09);border:1px solid rgba(200,169,110,.2);}
+.osp-bon-ship{color:rgba(90,180,90,.9);background:rgba(90,180,90,.08);border:1px solid rgba(90,180,90,.18);}
+.osp-bon-mct {color:rgba(160,200,100,.9);background:rgba(160,200,100,.07);border:1px solid rgba(160,200,100,.15);}
 /* summary */
 .os-sum{background:var(--bg);border-radius:11px;padding:14px 16px;}
 .os-sr{display:flex;justify-content:space-between;align-items:center;font-size:.79rem;color:var(--text2);margin-bottom:5px;}
