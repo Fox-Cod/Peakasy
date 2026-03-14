@@ -1,189 +1,157 @@
 {%- assign section_product = all_products[section.settings.product_handle] -%}
 {%- if section_product == empty -%}{%- assign section_product = all_products["mushroom-fuse-coffee"] -%}{%- endif -%}
 
+<div class="home-story">
 
-<!-- ═══════════════════════════════
-     HOME PAGE
-═══════════════════════════════ -->
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="hero-l">
-      <div class="h-eye" id="h-eye">🍄 Functional Mushroom Coffee</div>
-      <h1 class="h-title">Clarity.<br><em>Energy.</em><br><strong>Balance.</strong></h1>
-      <p class="h-sub">A medium roast instant coffee fused with organic Lion's Mane and Chaga — for focus, clean energy and calm. Ready in 60 seconds.</p>
-      <div class="h-stats">
-        <div><span class="sn">70%</span><span class="sl">PNG Single<br>Origin</span></div>
-        <div><span class="sn">15%</span><span class="sl">Lion's Mane<br>Extract</span></div>
-        <div><span class="sn">4.9★</span><span class="sl">Customer<br>Rating</span></div>
+<!-- ══════════════════════════════════
+     CHAPTER 1 — THE AWAKENING
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:4">
+  <div class="st-sticky">
+    <div class="st-ch1">
+      <div class="st-ch1-brand" id="st-brand">PEAKASY</div>
+      <p class="st-ch1-tag" id="st-tag">Clarity. Energy. Balance.</p>
+      <div class="st-ch1-can" id="st-can">
+        {%- if section_product.featured_image -%}
+          <img src="{{ section_product.featured_image | img_url: 'master' }}" alt="{{ section_product.title }}">
+        {%- else -%}
+          <img src="{{ 'Mush-Coffe-trans.png' | asset_url }}" alt="Peakasy Mushroom Coffee">
+        {%- endif -%}
       </div>
-      <div class="h-btns">
-        <button class="btn-g" onclick="goOrder()">Shop Now — {{ section_product.price | money }}</button>
-        <button class="btn-o" onclick="document.getElementById('prod-anch').scrollIntoView({behavior:'smooth'})">Learn More</button>
-      </div>
-      <div class="h-trust"><span class="h-stars">★★★★★</span><span>4.9 · 847 reviews · Free shipping over $40</span></div>
-    </div>
-    <div class="hero-r">
-      <div class="h-prod-stage">
-        <div class="h-prod-glow"></div>
-        <div class="h-prod-ring h-prod-ring1"></div>
-        <div class="h-prod-ring h-prod-ring2"></div>
-        <div class="h-imgw">
-          <img class="h-img"
-          src="{%- if section_product.featured_image -%}{{ section_product.featured_image | img_url: 'master' }}{%- else -%}{{ 'Mush-Coffe-trans.png' | asset_url }}{%- endif -%}"
-          alt="Peakasy Mushroom Coffee">
-        </div>
-        <div class="h-prod-badge h-pb1">🍄<span>Lion's Mane</span></div>
-        <div class="h-prod-badge h-pb2">🧠<span>NGF Boost</span></div>
-        <div class="h-prod-badge h-pb3">⚡<span>No Crash</span></div>
+      <div class="st-ch1-cta" id="st-cta">
+        <button class="btn-g" onclick="goOrder()">Get Peakasy — {{ section_product.price | money }}</button>
+        <p class="st-scroll-hint">↓ &nbsp; Scroll to begin</p>
       </div>
     </div>
   </div>
 </section>
 
-  <div class="h-strip">
-    <div class="hs">🌿 <b>100% Organic</b>&nbsp;Mushrooms</div>
-    <div class="hs">🔬 <b>Lab Tested</b>&nbsp;Every Batch</div>
-    <div class="hs">🇺🇸 <b>Made in USA</b>&nbsp;Freeze-Dried</div>
-    <div class="hs">📦 <b>30 Servings</b>&nbsp;Per Tin</div>
-    <div class="hs">⚡ <b>No Jitters</b>&nbsp;No Crash</div>
-  </div>
-<!-- MARQUEE -->
-<div class="mbar"><div class="mtrack">
-  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
-  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
-  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
-  <div class="mi">PEAKASY<div class="mdot"></div></div><div class="mi">MUSHROOM COFFEE<div class="mdot"></div></div>
-  <div class="mi">LION'S MANE<div class="mdot"></div></div><div class="mi">CHAGA EXTRACT<div class="mdot"></div></div>
-  <div class="mi">FOCUS · ENERGY · BALANCE<div class="mdot"></div></div><div class="mi">MADE IN USA<div class="mdot"></div></div>
-</div></div>
-
-<!-- PRODUCT -->
-<section class="prod-sec" id="prod-anch">
-  <div class="prod-inner">
-    <div class="ps-imgw">
-      <div class="ps-ring"></div>
-      <img class="ps-img" 
-  src="{% if section_product.featured_image %}{{ section_product.featured_image | img_url: 'master' }}{% else %}{{ 'Mush-Coffe-trans.png' | asset_url }}{% endif %}"
-   alt="Peakasy Mushroom Fuse">
-    </div>
-    <div class="ps-r">
-      <p class="tag">The Product</p>
-      <h2 class="h2">Mushroom Fuse<br>Instant Coffee</h2>
-      <p class="ps-desc">Rich flavor meets functional wellness. Freeze-dried single-origin Papua New Guinea coffee fused with organic Lion's Mane and Chaga. Bourbon, Typica, Catuai and Mundo Novo varietals create a chocolate-rich, full-bodied cup with a clean finish.</p>
-      <div class="ps-tags">
-        <span class="ptag">🍄 Lion's Mane</span><span class="ptag">🌑 Chaga</span>
-        <span class="ptag">☕ Medium Roast</span><span class="ptag">🇺🇸 Made in USA</span><span class="ptag">⚡ Instant</span>
-      </div>
-      <div class="ps-bens">
-        <div class="psb"><div class="psb-ico">🧠</div><div><div class="psb-t">Cognitive Clarity</div><div class="psb-d">Lion's Mane stimulates Nerve Growth Factor for sharper focus and memory.</div></div></div>
-        <div class="psb"><div class="psb-ico">🛡️</div><div><div class="psb-t">Immune Fortification</div><div class="psb-d">Chaga's beta-glucans and antioxidants support daily immune defense.</div></div></div>
-        <div class="psb"><div class="psb-ico">⚡</div><div><div class="psb-t">Clean, Balanced Energy</div><div class="psb-d">Adaptogens regulate cortisol — no jitters, no crash, pure flow.</div></div></div>
-      </div>
-      <button class="btn-g" onclick="goOrder()">Add to Cart — {{ section_product.price | money }}</button>
+<!-- ══════════════════════════════════
+     CHAPTER 2 — THE REALITY
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:3">
+  <div class="st-sticky">
+    <div class="st-ch2">
+      <p class="st-line" id="st-p1">Your coffee is holding you back.</p>
+      <p class="st-line st-line--sub" id="st-p2">The afternoon crash. The anxiety. The dependency.</p>
+      <p class="st-line st-line--q" id="st-p3">What if morning coffee could do more?</p>
     </div>
   </div>
 </section>
 
-<!-- TRUST -->
-<div class="tband"><div class="tband-row">
-  <div class="ti"><div class="ti-ico">🔬</div><div><div class="ti-t">Lab Tested</div><div class="ti-s">Every batch</div></div></div>
-  <div class="ti"><div class="ti-ico">🌿</div><div><div class="ti-t">Certified Organic</div><div class="ti-s">Mushroom extracts</div></div></div>
-  <div class="ti"><div class="ti-ico">🇺🇸</div><div><div class="ti-t">Made in USA</div><div class="ti-s">Freeze-dried</div></div></div>
-  <div class="ti"><div class="ti-ico">📦</div><div><div class="ti-t">Fast Shipping</div><div class="ti-s">2-5 business days</div></div></div>
-  <div class="ti"><div class="ti-ico">↩️</div><div><div class="ti-t">30-Day Returns</div><div class="ti-s">No questions</div></div></div>
-</div></div>
-
-<!-- ORDER NOW -->
-
-<!-- ✦ MAGNETIC TILT GALLERY -->
-<section class="gal-sec" id="gal-sec">
-  <div id="gcur">Explore</div>
-  <div class="gal-inner">
-    <div class="gal-hdr">
-      <p class="tag">The Experience</p>
-      <h2 class="h2">Every Detail, Considered</h2>
-      <p>Move your cursor across the cards — feel the depth.</p>
-    </div>
-    <div class="gal-grid">
-
-      <!-- HERO — product clean transparent -->
-      <div class="gc gc-hero" id="gc0" data-gi="0"
-        data-lb-src="{% if section_product.featured_image %}{{ section_product.featured_image | img_url: 'master' }}{% else %}{{ 'Mush-Coffe-trans.png' | asset_url }}{% endif %}"
-        onclick="galLbOpen(0)">
-        <div class="gc-bg gb1"></div>
-        <div class="gc-mid"><img 
-  src="{% if section_product.featured_image %}{{ section_product.featured_image | img_url: 'master' }}{% else %}{{ 'Mush-Coffe-trans.png' | asset_url }}{% endif %}"
-   alt="Peakasy Mushroom Fuse" style="height:80%;filter:drop-shadow(0 24px 48px rgba(0,0,0,.7))"></div>
-        <div class="gc-fg">
-          <span style="position:absolute;top:11%;left:13%;font-size:1rem;opacity:.24;animation:cf 7s ease-in-out infinite">🍄</span>
-          <span style="position:absolute;top:22%;right:14%;font-size:.75rem;opacity:.18;animation:cf 5s 1s ease-in-out infinite">✦</span>
-          <span style="position:absolute;bottom:28%;left:11%;font-size:.8rem;opacity:.2;animation:cf 6s 2s ease-in-out infinite">🌿</span>
-        </div>
-        <div class="gc-ov"></div><div class="gc-shine"></div>
-        <div class="gc-lbl"><span class="gc-lbl-t">Hero Product</span><span class="gc-lbl-s">Mushroom Fuse Coffee</span></div>
+<!-- ══════════════════════════════════
+     CHAPTER 3 — THE ANSWER
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:3">
+  <div class="st-sticky">
+    <div class="st-ch3">
+      <div class="st-ch3-can" id="st-ans-can">
+        {%- if section_product.featured_image -%}
+          <img src="{{ section_product.featured_image | img_url: 'master' }}" alt="{{ section_product.title }}">
+        {%- else -%}
+          <img src="{{ 'Mush-Coffe-trans.png' | asset_url }}" alt="Peakasy">
+        {%- endif -%}
       </div>
-
-      <!-- LIFESTYLE 1 — morning table -->
-      <div class="gc" id="gc1" data-gi="1" onclick="galLbOpen(1)">
-        <div class="gc-bg" style="background:none;"><img
-  src="{% if section_product.images[1] %}{{ section_product.images[1] | img_url: 'master' }}{% else %}{{ 'gallery-1.jpg' | asset_url }}{% endif %}"
-   alt="Morning Ritual" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
-        <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.25) 0%,rgba(8,6,4,.65) 100%);opacity:1;"></div>
-        <div class="gc-mid" style="flex-direction:column;gap:6px;z-index:2;">
-          <span style="font-family:Cormorant Garamond,serif;font-size:clamp(2.8rem,4.5vw,4rem);font-weight:700;color:var(--gold);line-height:1;display:block;">4.9</span>
-          <div style="color:var(--gold);font-size:.9rem;letter-spacing:3px">★★★★★</div>
-          <div style="font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,226,.7);margin-top:3px">847 Reviews</div>
-        </div>
-        <div class="gc-shine"></div>
-        <div class="gc-lbl"><span class="gc-lbl-t">Daily Ritual</span><span class="gc-lbl-s">Build a Better Routine</span></div>
+      <div class="st-ch3-text">
+        <h2 class="st-ch3-name" id="st-ans-name">MUSHROOM FUSE</h2>
+        <p class="st-ch3-ing" id="st-ans-ing">LION'S MANE &nbsp;•&nbsp; CHAGA &nbsp;•&nbsp; ARABICA</p>
       </div>
-
-      <!-- LIFESTYLE 2 — flatlay HOW IT WORKS -->
-      <div class="gc" id="gc2" data-gi="2" onclick="galLbOpen(2)">
-        <div class="gc-bg" style="background:none;"><img
-  src="{% if section_product.images[2] %}{{ section_product.images[2] | img_url: 'master' }}{% else %}{{ 'gallery-2.jpg' | asset_url }}{% endif %}"
-   alt="How It Works" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
-        <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.3) 0%,rgba(8,6,4,.72) 100%);opacity:1;"></div>
-        <div class="gc-mid" style="padding:20px;z-index:2;">
-          <div style="font-family:Cormorant Garamond,serif;font-style:italic;color:rgba(240,235,226,.88);font-size:clamp(.9rem,1.5vw,1.1rem);line-height:1.55;text-align:center;">"Not just coffee.<br>A ritual."<div style="margin-top:10px;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-style:normal">— Peakasy</div></div>
-        </div>
-        <div class="gc-shine"></div>
-        <div class="gc-lbl"><span class="gc-lbl-t">How It Works</span><span class="gc-lbl-s">Science-Backed Formula</span></div>
-      </div>
-
-      <!-- LIFESTYLE 3 — Meet Your Daily Reset -->
-      <div class="gc" id="gc3" data-gi="3" onclick="galLbOpen(3)">
-        <div class="gc-bg" style="background:none;"><img
-  src="{% if section_product.images[3] %}{{ section_product.images[3] | img_url: 'master' }}{% else %}{{ 'gallery-3.jpg' | asset_url }}{% endif %}"
-   alt="Daily Reset" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
-        <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.25) 0%,rgba(8,6,4,.7) 100%);opacity:1;"></div>
-        <div class="gc-mid" style="gap:14px;padding:0 14px;z-index:2;">
-          <div style="text-align:center;"><span style="font-family:Cormorant Garamond,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--gold);display:block;line-height:1">70%</span><div style="font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,235,226,.7)">Arabica</div></div>
-          <div style="width:1px;height:32px;background:rgba(200,169,110,.35);flex-shrink:0;"></div>
-          <div style="text-align:center;"><span style="font-family:Cormorant Garamond,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--gold);display:block;line-height:1">15%</span><div style="font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,235,226,.7)">Lion's Mane</div></div>
-          <div style="width:1px;height:32px;background:rgba(200,169,110,.35);flex-shrink:0;"></div>
-          <div style="text-align:center;"><span style="font-family:Cormorant Garamond,serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:700;color:var(--gold);display:block;line-height:1">15%</span><div style="font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,235,226,.7)">Chaga</div></div>
-        </div>
-        <div class="gc-shine"></div>
-        <div class="gc-lbl"><span class="gc-lbl-t">Meet Your Reset</span><span class="gc-lbl-s">Plant-Based Adaptogens</span></div>
-      </div>
-
-      <!-- LIFESTYLE 4 — Low Energy Costs You -->
-      <div class="gc" id="gc4" data-gi="4" onclick="galLbOpen(4)">
-        <div class="gc-bg" style="background:none;"><img
-  src="{% if section_product.images[4] %}{{ section_product.images[4] | img_url: 'master' }}{% else %}{{ 'gallery-4.jpg' | asset_url }}{% endif %}"
-   alt="Energy" style="width:116%;height:116%;object-fit:cover;display:block;"></div>
-        <div class="gc-ov" style="background:linear-gradient(160deg,rgba(8,6,4,.2) 0%,rgba(8,6,4,.75) 100%);opacity:1;"></div>
-        <div class="gc-shine"></div>
-        <div class="gc-lbl"><span class="gc-lbl-t">Clean Energy</span><span class="gc-lbl-s">No Crash. No Jitters.</span></div>
-      </div>
-
     </div>
   </div>
 </section>
 
+<!-- ══════════════════════════════════
+     CHAPTER 4 — THE INGREDIENTS
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:4">
+  <div class="st-sticky">
+    <div class="st-ch4">
+      <div class="st-ing" id="st-ing0">
+        <span class="st-ing-sci">Hericium erinaceus</span>
+        <h3 class="st-ing-name">Lion's Mane</h3>
+        <p class="st-ing-ben">Grow new neural connections.</p>
+      </div>
+      <div class="st-ing" id="st-ing1">
+        <span class="st-ing-sci">Inonotus obliquus</span>
+        <h3 class="st-ing-name">Chaga</h3>
+        <p class="st-ing-ben">Defend. Restore. Thrive.</p>
+      </div>
+      <div class="st-ing" id="st-ing2">
+        <span class="st-ing-sci">Coffea arabica</span>
+        <h3 class="st-ing-name">Arabica</h3>
+        <p class="st-ing-ben">The ritual you already know.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ══════════════════════════════════
+     CHAPTER 5 — THE RITUAL
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:2.5">
+  <div class="st-sticky">
+    <div class="st-ch5">
+      <p class="st-ch5-pre tag">How to Brew</p>
+      <div class="st-step" data-at="0.05">
+        <span class="st-step-n">01</span>
+        <div class="st-step-body">
+          <strong>Scoop</strong>
+          <span>1 teaspoon into your mug.</span>
+        </div>
+      </div>
+      <div class="st-step" data-at="0.3">
+        <span class="st-step-n">02</span>
+        <div class="st-step-body">
+          <strong>Pour</strong>
+          <span>8–10oz water at 160–175°F.</span>
+        </div>
+      </div>
+      <div class="st-step" data-at="0.55">
+        <span class="st-step-n">03</span>
+        <div class="st-step-body">
+          <strong>Stir</strong>
+          <span>Dissolve completely in ~10 seconds.</span>
+        </div>
+      </div>
+      <div class="st-step" data-at="0.78">
+        <span class="st-step-n">04</span>
+        <div class="st-step-body">
+          <strong>Savour</strong>
+          <span>Let clarity arrive.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPTER 6 — THE PROOF
+══════════════════════════════════ -->
+<section class="st-ch" data-story style="--dur:2">
+  <div class="st-sticky">
+    <div class="st-ch6">
+      <div class="st-rev" data-at="0.08">
+        <div class="st-rev-stars">★★★★★</div>
+        <blockquote class="st-rev-q">"3 months in and my focus is genuinely sharper. The 3pm crash is completely gone."</blockquote>
+        <cite class="st-rev-by">Sarah K. &nbsp;—&nbsp; New York</cite>
+      </div>
+      <div class="st-rev" data-at="0.38">
+        <div class="st-rev-stars">★★★★★</div>
+        <blockquote class="st-rev-q">"The calm creative clarity is real. As a designer my output has notably improved."</blockquote>
+        <cite class="st-rev-by">Elena M. &nbsp;—&nbsp; Berlin</cite>
+      </div>
+      <div class="st-rev" data-at="0.68">
+        <div class="st-rev-stars">★★★★★</div>
+        <blockquote class="st-rev-q">"Tried 6 mushroom coffees. This is the only one where I felt a genuine difference."</blockquote>
+        <cite class="st-rev-by">Luca B. &nbsp;—&nbsp; Milan</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CHAPTER 7 — THE OFFER (Order)
+══════════════════════════════════ -->
 <section class="order-sec" id="order-sec">
   <div class="os-hdr">
     <p class="tag">Order Now</p>
@@ -243,7 +211,6 @@
             </div>
           </div>
           <div>
-
             <!-- PURCHASE TYPE TOGGLE -->
             <div class="sub-toggle">
               <button class="sub-opt active" id="sub-onetime" onclick="pkSetPurchaseType('onetime')">
@@ -282,7 +249,6 @@
               {%- form 'product', sec_prod, id: 'pk-atc-form' -%}
                 <input type="hidden" name="id" id="pk-variant-id" value="{{ sec_variant.id }}">
                 <input type="hidden" name="quantity" id="pk-qty" value="1">
-                <!-- Shopify Subscriptions: selling_plan ID, populated from product selling plans -->
                 <div class="subscriptions_app_embed_block"></div>
                 {%- assign sub_plan = sec_prod.selling_plan_groups.first.selling_plans.first -%}
                 <input type="hidden" name="" id="pk-selling-plan" value="{{ sub_plan.id | default: '' }}">
@@ -314,184 +280,9 @@
   </div>
 </section>
 
-<!-- RITUAL BUILDER -->
-<section class="ritual-sec" id="ritual-sec">
-  <div class="rit-inner">
-    <div class="rit-hdr">
-      <p class="tag">Personalise Your Ritual</p>
-      <h2 class="h2">Build Your Perfect Cup</h2>
-      <p>3 quick questions — your ideal Peakasy ritual, crafted just for you.</p>
-    </div>
-    <div class="rit-tabs">
-      <div class="rtab on" id="rtab0"><span class="rtab-n">1</span>Goal</div>
-      <div class="rtab" id="rtab1"><span class="rtab-n">2</span>Time</div>
-      <div class="rtab" id="rtab2"><span class="rtab-n">3</span>Base</div>
-    </div>
-    <!-- Panel 0 -->
-    <div class="rpan on" id="rpan0">
-      <div class="ropts">
-        <div class="ropt" data-s="0" data-v="focus" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🧠</span><div class="ropt-t">Focus & Clarity</div><div class="ropt-s">Sharp mind, deep work</div></div>
-        <div class="ropt" data-s="0" data-v="energy" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">⚡</span><div class="ropt-t">Energy & Stamina</div><div class="ropt-s">Power, no crash</div></div>
-        <div class="ropt" data-s="0" data-v="calm" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🌿</span><div class="ropt-t">Calm & Balance</div><div class="ropt-s">Grounded, centred</div></div>
-      </div>
-      <div class="rit-nav"><div class="rit-dots"><div class="rdot on"></div><div class="rdot"></div><div class="rdot"></div></div><div class="rit-btns"><button class="rit-btn prim" id="rn0" onclick="rNext()" disabled>Next →</button></div></div>
-    </div>
-    <!-- Panel 1 -->
-    <div class="rpan" id="rpan1">
-      <div class="ropts">
-        <div class="ropt" data-s="1" data-v="morning" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🌅</span><div class="ropt-t">Morning</div><div class="ropt-s">6am–10am · Rise & Ignite</div></div>
-        <div class="ropt" data-s="1" data-v="midday" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">☀️</span><div class="ropt-t">Mid-Day</div><div class="ropt-s">10am–3pm · Sustain Flow</div></div>
-        <div class="ropt" data-s="1" data-v="evening" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🌙</span><div class="ropt-t">Evening</div><div class="ropt-s">3pm–7pm · Wind Down</div></div>
-      </div>
-      <div class="rit-nav"><div class="rit-dots"><div class="rdot done"></div><div class="rdot on"></div><div class="rdot"></div></div><div class="rit-btns"><button class="rit-btn" onclick="rBack()">← Back</button><button class="rit-btn prim" id="rn1" onclick="rNext()" disabled>Next →</button></div></div>
-    </div>
-    <!-- Panel 2 -->
-    <div class="rpan" id="rpan2">
-      <div class="ropts">
-        <div class="ropt" data-s="2" data-v="black" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">☕</span><div class="ropt-t">Black Coffee</div><div class="ropt-s">Pure and bold</div></div>
-        <div class="ropt" data-s="2" data-v="oat" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🌾</span><div class="ropt-t">Oat Milk</div><div class="ropt-s">Creamy, plant-based</div></div>
-        <div class="ropt" data-s="2" data-v="almond" onclick="rPick(this)"><div class="ropt-chk">✓</div><span class="ropt-ico">🥛</span><div class="ropt-t">Almond Milk</div><div class="ropt-s">Light and nutty</div></div>
-      </div>
-      <div class="rit-nav"><div class="rit-dots"><div class="rdot done"></div><div class="rdot done"></div><div class="rdot on"></div></div><div class="rit-btns"><button class="rit-btn" onclick="rBack()">← Back</button><button class="rit-btn prim" id="rn2" onclick="rBuild()" disabled>Build My Ritual →</button></div></div>
-    </div>
-    <!-- Result -->
-    <div class="rit-res" id="rit-res">
-      <div class="rr-top">
-        <div class="rr-l">
-          <div class="rr-tag-l" id="rr-tag"></div>
-          <div class="rr-title" id="rr-title"></div>
-          <div class="rr-desc" id="rr-desc"></div>
-          <div class="rr-recipe"><div class="rr-rtitle">Your Recipe</div><div id="rr-steps"></div></div>
-        </div>
-        <div class="rr-r">
-          <img class="rr-img" id="rr-img" src="{{ 'Mush-Coffe-trans.png' | asset_url }}" alt="Peakasy">
-          <div class="rr-bens" id="rr-bens"></div>
-        </div>
-      </div>
-      <div class="rr-foot">
-        <div><div class="rr-price-lbl">Perfect for your ritual</div><div class="rr-price">Peakasy Mushroom Fuse — {{ section_product.price | money }}</div></div>
-        <div class="rr-acts">
-          <button class="rit-btn" onclick="rReset()">← Try Again</button>
-          <button class="rit-btn prim" onclick="addToCart()">Add to Cart →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PARALLAX INGREDIENTS -->
-<section class="pi-sec" id="pi-sec">
-  <div class="pi-ptcl" style="left:7%;animation-duration:13s;animation-delay:0s;font-size:1.2rem">🍄</div>
-  <div class="pi-ptcl" style="left:19%;animation-duration:16s;animation-delay:2s;font-size:.9rem">✦</div>
-  <div class="pi-ptcl" style="left:38%;animation-duration:12s;animation-delay:4s;font-size:1rem">🌿</div>
-  <div class="pi-ptcl" style="left:57%;animation-duration:15s;animation-delay:1.5s;font-size:.85rem">◆</div>
-  <div class="pi-ptcl" style="left:74%;animation-duration:14s;animation-delay:3s;font-size:1rem">🍄</div>
-  <div class="pi-ptcl" style="left:88%;animation-duration:11s;animation-delay:5s;font-size:.9rem">✦</div>
-  <div class="pi-inner">
-    <div class="pi-hdr"><p class="tag">What's Inside</p><h2 class="h2">Pure Ingredients,<br>Real Results</h2></div>
-    <div class="pi-ctr">
-      <div class="pi-ring"><div class="orbdot"></div></div>
-      <img class="pi-can" id="pi-can" 
-  src="{% if section_product.featured_image %}{{ section_product.featured_image | img_url: 'master' }}{% else %}{{ 'Mush-Coffe-trans.png' | asset_url }}{% endif %}"
-   alt="Peakasy">
-    </div>
-    <div class="pi-grid">
-      <div class="pic" id="pic0"><div class="pic-glow"></div><span class="pic-ico">☕</span><div class="pic-pct">70%</div><div class="pic-nm">Roasted Arabica Coffee</div><div class="pic-bw"><div class="pic-bar" style="--bw:70%"></div></div><div class="pic-desc">Single-origin Papua New Guinea. Bourbon, Typica, Catuai, Mundo Novo — chocolate-rich, full-bodied, smooth finish.</div><div class="pic-facts"><div class="pic-fact">Freeze-dried to preserve aroma</div><div class="pic-fact">Medium roast — balanced acidity</div><div class="pic-fact">60-80mg caffeine per serving</div></div></div>
-      <div class="pic" id="pic1"><div class="pic-glow"></div><span class="pic-ico">🧠</span><div class="pic-pct">15%</div><div class="pic-nm">Organic Lion's Mane</div><div class="pic-bw"><div class="pic-bar" style="--bw:15%"></div></div><div class="pic-desc">Stimulates Nerve Growth Factor. Enhances memory and cognitive clarity. Triple-extracted for full bioavailability.</div><div class="pic-facts"><div class="pic-fact">Hericenones and Erinacines</div><div class="pic-fact">Certified Organic Extract</div><div class="pic-fact">2x NGF stimulation studied</div></div></div>
-      <div class="pic" id="pic2"><div class="pic-glow"></div><span class="pic-ico">🌑</span><div class="pic-pct">15%</div><div class="pic-nm">Organic Chaga Mushroom</div><div class="pic-bw"><div class="pic-bar" style="--bw:15%"></div></div><div class="pic-desc">Wild-harvested antioxidant powerhouse. Beta-glucans fortify immune defense. Rich in betulinic acid and melanin.</div><div class="pic-facts"><div class="pic-fact">52,000 ORAC antioxidant score</div><div class="pic-fact">Beta-glucan immune modulation</div><div class="pic-fact">Certified Organic Extract</div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW TO BREW -->
-<section class="brew-sec">
-  <div class="brew-inner">
-    <p class="tag">How to Brew</p>
-    <h2 class="h2">Ready in 60 Seconds</h2>
-    <div class="brew-steps">
-      <div class="bstep"><div class="bstep-ln"></div><div class="bstep-n">01</div><div class="bstep-ico">🥄</div><div class="bstep-t">Scoop</div><div class="bstep-d">1 teaspoon to your mug.</div></div>
-      <div class="bstep"><div class="bstep-ln"></div><div class="bstep-n">02</div><div class="bstep-ico">💧</div><div class="bstep-t">Pour</div><div class="bstep-d">8-10oz water at 160-175°F.</div></div>
-      <div class="bstep"><div class="bstep-ln"></div><div class="bstep-n">03</div><div class="bstep-ico">🌀</div><div class="bstep-t">Stir</div><div class="bstep-d">Dissolve in ~10 seconds.</div></div>
-      <div class="bstep"><div class="bstep-n">04</div><div class="bstep-ico">☕</div><div class="bstep-t">Enjoy</div><div class="bstep-d">Savour the clarity.</div></div>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- ✦ WATERFALL REVIEWS -->
-<section class="wfall-sec" id="wfall-sec">
-  <!-- Lightbox -->
-  <div class="wlb" id="wlb" onclick="wlbClose()">
-    <button id="wlb-close" onclick="wlbClose()">✕</button>
-    <img class="wlb-img" id="wlb-img" src="" alt="">
-    <div class="wlb-info" id="wlb-info"></div>
-  </div>
-  <div class="wfall-inner">
-    <div class="wfall-hdr">
-      <div>
-        <p class="tag">What People Say</p>
-        <h2 class="h2">Real Words.<br>Real People.</h2>
-      </div>
-      <div class="wfall-meta">
-        <span class="wfall-sc">4.9</span>
-        <div class="wfall-st">★★★★★</div>
-        <div class="wfall-ct">847 verified reviews</div>
-      </div>
-    </div>
-    <div class="wfall-stage" id="wfall-stage">
-      <button class="wfall-ctl" id="wfall-ctl" onclick="wfToggle()">&#x23F8;</button>
-      <div class="wfall-cols">
-        <div class="wfall-col" id="wcol0"></div>
-        <div class="wfall-col" id="wcol1"></div>
-        <div class="wfall-col" id="wcol2"></div>
-      </div>
-      <div class="wfall-fade"></div>
-    </div>
-    <div class="wfall-stats">
-      <div class="wsst"><span class="wsst-n">847</span><div class="wsst-l">Total Reviews</div></div>
-      <div class="wsst"><span class="wsst-n">98%</span><div class="wsst-l">Recommend</div></div>
-      <div class="wsst"><span class="wsst-n">4.9</span><div class="wsst-l">Avg Rating</div></div>
-      <div class="wsst"><span class="wsst-n">30+</span><div class="wsst-l">Countries</div></div>
-    </div>
-  </div>
-</section>
-
-
-<!-- SCIENCE -->
-<section class="sci-sec">
-  <div class="sci-inner">
-    <div class="sci-l">
-      <p class="tag">Science-Backed</p><h2 class="h2">Why It Works</h2>
-      <p>Lion's Mane contains hericenones and erinacines — compounds clinically studied for stimulating Nerve Growth Factor (NGF), directly linked to neuroplasticity and cognitive health.</p>
-      <p>Chaga delivers the highest ORAC antioxidant score of any food, along with beta-glucans that modulate immune response at a cellular level. Together, they transform your daily coffee into a wellness ritual.</p>
-      <div class="sci-facts">
-        <div class="sf"><div class="sf-n">2x</div><div class="sf-l">NGF stimulation vs control</div></div>
-        <div class="sf"><div class="sf-n">52k</div><div class="sf-l">ORAC score per 100g</div></div>
-        <div class="sf"><div class="sf-n">100%</div><div class="sf-l">Organic extracts</div></div>
-        <div class="sf"><div class="sf-n">0</div><div class="sf-l">Fillers or additives</div></div>
-      </div>
-    </div>
-    <div>
-      <p class="tag" style="margin-bottom:14px">Product Specifications</p>
-      <table class="spec-tbl">
-        <tr><td>Coffee Type</td><td>Instant (Freeze-Dried)</td></tr>
-        <tr><td>Roast</td><td>Medium Roast</td></tr>
-        <tr><td>Origin</td><td>Papua New Guinea (70%)</td></tr>
-        <tr><td>Varietals</td><td>Bourbon, Typica, Catuai, Mundo Novo</td></tr>
-        <tr><td>Lion's Mane</td><td>15% Organic Extract</td></tr>
-        <tr><td>Chaga</td><td>15% Organic Extract</td></tr>
-        <tr><td>Net Weight</td><td>1.9oz / 54g</td></tr>
-        <tr><td>Servings</td><td>~30 per tin</td></tr>
-        <tr><td>Manufacturer</td><td>USA</td></tr>
-        <tr><td>Shelf Life</td><td>Up to 1 year (sealed)</td></tr>
-        <tr><td>Suggested Use</td><td>1 tsp in 8-10oz hot water</td></tr>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
+<!-- ══════════════════════════════════
+     CHAPTER 8 — FAQ
+══════════════════════════════════ -->
 <section class="faq-sec">
   <div class="faq-inner">
     <div class="faq-hdr"><p class="tag">Questions</p><h2 class="h2">FAQ</h2></div>
@@ -504,10 +295,11 @@
   </div>
 </section>
 
-<!-- CTA -->
+<!-- ══════════════════════════════════
+     CHAPTER 9 — FOOTER
+══════════════════════════════════ -->
 <div class="cta-ban"><p class="tag">Ready to Peak?</p><h2 class="h2">Start Your Ritual Today</h2><p>Join 847+ customers who upgraded their morning coffee.</p><button class="btn-g" onclick="goOrder()">Get Peakasy — {{ section_product.price | money }} →</button></div>
 
-<!-- FOOTER -->
 <footer>
   <div class="ft">
     <div class="ft-brand"><span class="n-logo-text" style="font-size:1.1rem;color:var(--foot-text)">Peakasy</span><p class="ft-desc">Ancient mushroom wisdom meets modern coffee craft. Fuel your focus, naturally.</p></div>
@@ -518,10 +310,9 @@
   </div>
   <div class="ft-btm"><span>© 2026 Peakasy. All rights reserved.</span><span>Focus · Energy · Balance</span></div>
 </footer>
+
 </div>
 
-<!-- ═══ ABOUT PAGE ═══ -->
-</div>
 {% schema %}
 {"name":"Home Page","tag":"div","class":"home-wrap","settings":[{"type":"text","id":"product_handle","label":"Product URL handle","info":"Find in Shopify Admin → Products → click your product → the last part of the URL","default":"mushroom-fuse-coffee"}]}
 {% endschema %}
