@@ -1072,3 +1072,151 @@ function toast(msg, icon) {
 		}
 	}
 })()
+
+// ═══ VIDEO SCROLL STORY ═══
+;(function () {
+	var TOTAL  = 300
+	var wrap   = document.getElementById('vs-wrap')
+	var canvas = document.getElementById('vs-canvas')
+	if (!canvas || !wrap) return
+	var ctx    = canvas.getContext('2d')
+	// High-quality smoothing: uses bilinear interpolation when upscaling frames
+	ctx.imageSmoothingEnabled  = true
+	ctx.imageSmoothingQuality  = 'high'
+	var frames = new Array(TOTAL)
+	var lastIdx = 0
+	var painted = false
+	var urls   = window.VS_FRAME_URLS || []
+
+	// ── Canvas: match actual rendered box size ────────────
+	// Using offsetWidth/Height (not window.inner) so the canvas buffer
+	// exactly matches the CSS-displayed size — no distortion.
+	function resizeCanvas() {
+		var w = canvas.offsetWidth  || window.innerWidth
+		var h = canvas.offsetHeight || window.innerHeight
+		canvas.width  = w
+		canvas.height = h
+		if (painted) drawFrame(lastIdx)
+	}
+	window.addEventListener('resize', resizeCanvas)
+
+	// ── Draw: cover-fit (fills entire canvas, never letterboxes) ─
+	// Walks BACK from idx to find the nearest already-loaded frame,
+	// so the canvas always shows something rather than going blank.
+	function drawFrame(idx) {
+		var img = null
+		var used = idx
+		for (var d = 0; d < TOTAL; d++) {
+			var i = idx - d
+			if (i < 0) break
+			var c = frames[i]
+			if (c && c.complete && c.naturalWidth) { img = c; used = i; break }
+		}
+		if (!img) return
+		lastIdx = used
+		painted = true
+		var cw = canvas.width, ch = canvas.height
+		var iw = img.naturalWidth, ih = img.naturalHeight
+		var sc = Math.max(cw / iw, ch / ih)   // cover — fill screen
+		var dw = iw * sc, dh = ih * sc
+		ctx.clearRect(0, 0, cw, ch)
+		ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh)
+	}
+
+	// ── Preload all 300 frames ────────────────────────────
+	for (var i = 0; i < TOTAL; i++) {
+		;(function (idx) {
+			var img = new Image()
+			img.onload = function () {
+				// Draw frame 0 as soon as it arrives (shows something immediately)
+				if (idx === 0 && !painted) {
+					resizeCanvas()
+					drawFrame(0)
+				}
+			}
+			img.src = urls[idx] || ''
+			frames[idx] = img
+		})(i)
+	}
+
+	// ── Intro element — fades out when user scrolls, has mouse parallax ─────
+	var introEl   = document.getElementById('vs-t0')
+	var introCirc = introEl ? introEl.querySelector('.vs-ic')  : null
+	var introBrand= introEl ? introEl.querySelector('.vs-ib')  : null
+
+	// Mouse parallax: circle drifts opposite, brand text drifts with cursor
+	document.addEventListener('mousemove', function (e) {
+		if (!introEl || parseFloat(introEl.style.opacity || '1') < 0.05) return
+		var mx = (e.clientX / window.innerWidth  - 0.5) * 2  // -1 → +1
+		var my = (e.clientY / window.innerHeight - 0.5) * 2
+		if (introCirc)  introCirc.style.transform  = 'translate(' + (-mx * 14) + 'px,' + (-my * 7) + 'px)'
+		if (introBrand) introBrand.style.transform = 'translate(' + ( mx *  8) + 'px,' + ( my * 4) + 'px)'
+	})
+
+	// ── Scroll-driven text overlays (scenes 1–4, NOT the intro) ──────────
+	// Frame ranges based on visual inspection of 300-frame sequence:
+	//  25–80  : single bean grows → Arabica   (top-left)
+	//  80–165 : mushroom sprouts  → Lion's Mane (top-right)
+	// 155–195 : mushroom settles  → Chaga      (bottom-right)
+	// 210–299 : can + cup reveal  → Product CTA (top-left)
+	var overlays = [
+		{ id: 'vs-t1', fi: 30,  fh1: 42,  fh2: 68,  fo: 80  },
+		{ id: 'vs-t2', fi: 88,  fh1: 100, fh2: 140, fo: 152 },
+		{ id: 'vs-t3', fi: 158, fh1: 164, fh2: 178, fo: 190 },
+		{ id: 'vs-t4', fi: 215, fh1: 228, fh2: 280, fo: 296 }
+	]
+	var oEls = overlays.map(function (o) { return document.getElementById(o.id) })
+
+	function getOpacity(f, o) {
+		if (f < o.fi || f > o.fo) return 0
+		if (f <= o.fh1) return (f - o.fi) / (o.fh1 - o.fi)
+		if (f >= o.fh2) return 1 - (f - o.fh2) / (o.fo - o.fh2)
+		return 1
+	}
+
+	// ── rAF render ────────────────────────────────────────
+	var targetFrame = 0
+	var rafId = null
+
+	function tick() {
+		rafId = null
+		drawFrame(targetFrame)
+
+		// Intro fade-out: fully visible on frame 0, fades between frames 18–30
+		if (introEl) {
+			var f = targetFrame
+			var iop = f < 18 ? 1 : (f > 30 ? 0 : 1 - (f - 18) / (30 - 18))
+			introEl.style.opacity = iop
+		}
+
+		// Scroll-driven overlays (scenes 1–4)
+		for (var i = 0; i < overlays.length; i++) {
+			var el = oEls[i]
+			if (!el) continue
+			var op = getOpacity(targetFrame, overlays[i])
+			el.style.opacity = op
+			var rising = targetFrame < overlays[i].fh1
+			el.style.transform = 'translateY(' + (rising ? (1 - op) * 20 : 0) + 'px)'
+		}
+	}
+
+	// ── Scroll: getBCR.top used directly on every event ──
+	// Formula: -rect.top goes from 0 (section entered) to scrollable (section done).
+	// No caching needed — always accurate, immune to layout shifts.
+	function onScroll() {
+		var rect       = wrap.getBoundingClientRect()
+		var scrollable = wrap.offsetHeight - window.innerHeight
+		if (scrollable <= 0) return
+		var p = Math.max(0, Math.min(1, -rect.top / scrollable))
+		targetFrame = Math.round(p * (TOTAL - 1))
+		if (!rafId) rafId = requestAnimationFrame(tick)
+	}
+
+	window.addEventListener('scroll', onScroll, { passive: true })
+
+	// Init: run once after first paint so canvas has correct dimensions
+	requestAnimationFrame(function () {
+		resizeCanvas()
+		onScroll()
+	})
+})()
